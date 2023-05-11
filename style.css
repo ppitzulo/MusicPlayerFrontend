@@ -20,14 +20,13 @@ body {
     background-color: #0d0d0d;
     align-items: center;
     justify-content: center;
+    scroll-padding-top: 60px
 }
 
 .thumbnail {
     border-radius: 8px;
     width: 100%;
 }
-
-
 
 #volume-slider {
     width: 100px;
@@ -60,7 +59,10 @@ h1 {
 }
 
 .player {
-    background-color: #1f1f1f;    
+    background-color: #1f1f1f;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 .music_player_header {
