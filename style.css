@@ -1,0 +1,140 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: white;
+    --highlight: #2e933c;
+}
+
+
+body {
+    background-color: #0d0d0d;
+}
+
+.thumbnail {
+    border-radius: 8px;
+    width: 100%;
+}
+
+
+
+#volume-slider {
+    width: 100px;
+}
+
+#seek-slider {
+    /* width: 300px; */
+    position: absolute;
+    /* bottom: 0px; */
+    /* top: 21%; */
+    /* left: 2%; */
+    bottom: -2%;
+    /* top: 100%; */
+    left: 0;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+#music_player_container {
+    background-color: #1f1f1f;
+    max-width: 300px;
+    max-height: 600px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+
+.music_player {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.music_player_header {
+    position: relative;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 150px;
+}
+
+
+.controls button {
+    background: transparent;
+    border-color: transparent;
+}
+
+.fa-solid {
+    font-size: 2rem;
+}
+
+.title {
+    text-align: center;
+}
+
+
+input[type="range"] {
+    background: transparent;
+    /* height: 160px; */
+    /* margin: 0; */
+    /* padding: 0; */
+    line-height: 160px;
+}
+
+input[type="range"]::-moz-range-track {
+    /* appearance: none; */
+    background: white;
+    /* height: 0.5rem; */
+    border-radius: 10px;
+    /* -moz-appearance: none; */
+    cursor: pointer;
+    /* -moz-appearance: none;/ */
+    /* pointer-events: none; */
+    cursor: pointer;
+    /* height: 1rem; */
+    height: .5rem;
+}
+
+
+input[type="range"]:hover::-moz-range-thumb {
+    background: white;
+}
+
+input[type="range"]::-moz-range-progress {
+    background-color: #81c14b;
+    /* background: var(--highlight); */
+
+    /* height: 90%; */
+    border-radius: 10px;
+    height: .5rem;
+}
+
+::-webkit-scrollbar-track {
+    /* background-color: red; Default track color */
+  }
+
+input[type="range"]::-moz-range-thumb {
+    background: transparent;
+    border: transparent;
+    /* display: none; */
+}
+
+#play-icon {
+    background-color: var(--highlight);
+    border-radius: 50%;
+    padding: 1.5rem;
+    cursor: pointer;
+}
+
+#play-icon:hover {
+    background: ;
+}
