@@ -6,31 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music_player</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="music_player_container">
-      <div class="music_player">
-        <div class="music_player_header">
+        <div class="music_player_header background">
           <img
             class="thumbnail"
             src="img/akatsuki_records.jpg"
-            alt="Yuuka album art" />
-            <input type="range" id="seek-slider" max="100" value="0">
+            alt="Yuuka album art"
+          />
         </div>
-        <h1 class="title">Eternal Summer</h1>
         <audio controls hidden></audio>
-        <div class="player">
-          <input type="range" id="volume-slider" max="100" value="100">
-          <div class="controls">
-            <button id="previous"><i class="fa-solid fa-backward"></i></button>
-            <button id="play-icon"><i class="fa-solid fa-play"></i></button>
-            <button id="next"><i class="fa-solid fa-forward"></i></button>
+        <div class="player background">
+          <!-- <input type="range" id="volume-slider" max="100" value="100" /> -->
+          <input type="range" id="seek-slider" max="100" value="0" />
+          <div class="control-buttons">
+            <div class="controls">
+              <button id="previous"><i class="fa-solid fa-backward"></i></button>
+              <button id="play-icon"><i class="fa-solid fa-play"></i></button>
+              <button id="next"><i class="fa-solid fa-forward"></i></button>
+            </div>
+            <h1 class="title">Eternal Summer</h1>
           </div>
-        </div>
       </div>
     </div>
   </body>
