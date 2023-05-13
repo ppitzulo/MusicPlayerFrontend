@@ -1,0 +1,132 @@
+.thumbnail {
+    border-radius: 8px;
+    width: 100%;
+}
+
+#volume-slider {
+    width: 100px;
+}
+
+#seek-slider {
+    width: 100%;
+    margin-bottom: 1rem;
+
+}
+
+h1 {
+    font-size: 1.4rem;
+}
+
+#music_player_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.background {
+    background-color: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+}
+
+.player {
+    background-color: #1f1f1f;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.music_player_header {
+    position: relative;
+    margin: 2rem;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    width: 140px;
+    align-items: center;
+    margin: auto 0;
+    padding: 1rem;
+    margin-left: 1rem;
+}
+
+
+.controls button {
+    background: transparent;
+    border-color: transparent;
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.fa-solid {
+    font-size: 1.4rem;
+}
+
+.title {
+    margin: auto 3rem auto 0;
+}
+
+
+
+input[type="range"] {
+    background: transparent;
+    line-height: 160px;
+    border-radius: 0;
+    
+}
+
+/* Firefox Range Styling */
+input[type="range"]::-moz-range-track {
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    cursor: pointer;
+    height: .5rem;
+}
+
+
+input[type="range"]:hover::-moz-range-thumb {
+    background: white;
+}
+
+input[type="range"]::-moz-range-progress {
+    background-color: #81c14b;
+
+    border-radius: 10px;
+    height: .5rem;
+}
+
+input[type="range"]::-moz-range-thumb {
+    background: transparent;
+    border: transparent;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    border-radius: 10px;
+    height: .5rem;
+}
+
+progress {
+    -webkit-appearance: none;
+}
+
+::-webkit-progress-value {
+    background-color: red;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -5px;
+}
