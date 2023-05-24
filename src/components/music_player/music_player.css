@@ -1,6 +1,7 @@
 .thumbnail {
     border-radius: 8px;
-    width: 100%;
+    width: 75%;
+    margin: auto;
 }
 
 #volume-slider {
@@ -129,4 +130,8 @@ input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     margin-top: -5px;
+}
+
+.duration {
+    display: none;
 }

@@ -1,0 +1,25 @@
+.playlist-container {
+    border-color: red;
+    border-width: 2px;
+    margin: auto;
+    width: 90%;
+}
+
+.song {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.thumbnail2 {
+    border-radius: 5px;
+    width: 75px;
+}
+
+.test {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+}
