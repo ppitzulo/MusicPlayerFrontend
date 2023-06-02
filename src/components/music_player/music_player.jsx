@@ -6,6 +6,8 @@ function music_player() {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setCurrentDuration] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [selectedSong, setSelectedSong] = useState({});
+
   const audioPlayerRef = useRef(null)
   
   useEffect(() => {
@@ -37,6 +39,15 @@ function music_player() {
     setIsPlaying(false)
   }
 
+  const changeSong = (songSrc) => {
+    setSelectedSong(songSrc)
+    console.log(audioPlayerRef)
+    audioPlayerRef.current.addEventListener('canplay', () => {
+      audioPlayerRef.current.play();
+      setIsPlaying(true);
+    });    // if (!isPlaying) { audioPlayerRef.current.play() }
+  }
+
   const handleSeek = (e) => {
     const seekTime = parseFloat(e.target.value);
     audioPlayerRef.current.currentTime = seekTime;
@@ -48,12 +59,13 @@ function music_player() {
         <div className="music_player_header background">
           <img
             className="thumbnail"
-            src="img/akatsuki_records.jpg"
+            src={selectedSong.thumbnail}
             alt="Yuuka album art"
           />
         </div>
-        <Playlist />
-        <audio src="http://localhost:8000/media/audio/Emblem.opus" ref={audioPlayerRef} ></audio>
+        <Playlist handleSongSelect={changeSong}/>
+        {console.log(selectedSong)}
+        <audio src={selectedSong.url} ref={audioPlayerRef} ></audio>
         <div className="player background">
           {/* <input type="range" id="volume-slider" max="100" value="100" /> */}
           <input type="range" id="seek-slider" min="0" step="0.01" max={duration} value={currentTime} onChange={handleSeek} />
@@ -64,7 +76,7 @@ function music_player() {
               <button onClick={isPlaying ? pause : play} id="play-icon"><i className="fa-solid fa-play"></i></button>
               <button id="next"><i className="fa-solid fa-forward"></i></button>
             </div>
-            <h1 className="title">Eternal Summer</h1>
+            <h1 className="title">{selectedSong.title ? selectedSong.title : "No Title"} </h1>
           </div>
       </div>
     </div>
