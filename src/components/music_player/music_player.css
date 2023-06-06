@@ -52,7 +52,7 @@ h1 {
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 1rem;
-    width: 140px;
+    width: 120px;
     align-items: center;
     margin: auto 0;
     padding: 1rem;
@@ -67,7 +67,8 @@ h1 {
 
 .control-buttons {
     display: flex;
-    justify-content: space-between;
+    gap: 25px;
+    /* justify-content: space-between; */
     margin-bottom: 1rem;
 }
 
@@ -76,7 +77,8 @@ h1 {
 }
 
 .title {
-    margin: auto 3rem auto 0;
+    margin: auto 15px auto 0;
+    width: 55%;
 }
 
 

@@ -1,11 +1,20 @@
 .playlist-container {
-    border-color: red;
-    border-width: 2px;
     margin: auto;
-    width: 90%;
+    width: 100%;
     overflow-y: scroll;
 }
 
+.header {
+    border-bottom: 1.5px solid white;
+    border-color: rgba(128, 128, 128, 0.8);
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.upload {
+    color: grey;
+}
 .song {
     position: relative;
     display: flex;
@@ -55,6 +64,7 @@
 }
 
 .playlist {
+    margin: 15px 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;

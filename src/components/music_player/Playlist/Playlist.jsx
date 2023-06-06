@@ -3,15 +3,12 @@ import "./Playlist.css";
 
 function Playlist({ handleSongSelect }) {
   const [playlistMetadata, setPlaylistMetadata] = useState([]);
-  
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-  };
+  const [buttonStates, setButtonStates] = useState({
+    nowPlaying: true,
+    upload: false,
+});
 
   const fetchPlaylist = () => {
-    console.log("Test");
     fetch("http://192.168.0.125:8000/api/list-songs")
       .then((response) => {
         return response.json();
@@ -25,9 +22,27 @@ function Playlist({ handleSongSelect }) {
     fetchPlaylist();
   }, []);
 
-  return (
+  const handleIsNowPlayingClicked = (buttonName) => {
+    setButtonStates(() => ({
+      nowPlaying: buttonName === 'nowPlaying',
+      upload: buttonName === 'upload',
+    }));
+  };
+  
+
+  const highlightMenu = (buttonName) => {
+    return buttonStates[buttonName] ? 'white' : 'grey';
+  };
+    return (
     <div className="playlist-container">
-      <div className="header">Header</div>
+      <div className="header">
+        <h1 className="header-text"
+            style={{color: highlightMenu('nowPlaying')}}
+            onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Now Playing</h1>
+        <h1 className="header-text upload"
+            style={{ color: highlightMenu('upload')}}
+            onClick={() => handleIsNowPlayingClicked('upload')}> Upload</h1>
+      </div>
       <div className="playlist">
         {playlistMetadata.map((song) => (
           <div className="song">
@@ -37,7 +52,7 @@ function Playlist({ handleSongSelect }) {
               <p className="artist">{song.artist}</p>
             </div>
             <p className="runtime">{song.runtime}</p>
-            {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> */}
+            {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> implement this later for desktop*/}
           </div>
         ))}
       </div>
