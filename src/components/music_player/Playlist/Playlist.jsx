@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Playlist.css";
 
-function Playlist({ handleSongSelect }) {
-  const [playlistMetadata, setPlaylistMetadata] = useState([]);
+function Playlist({ playlistMetadata, handleSongSelect }) {
   const [buttonStates, setButtonStates] = useState({
     nowPlaying: true,
     upload: false,
 });
-
-  const fetchPlaylist = () => {
-    fetch("http://192.168.0.125:8000/api/list-songs")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setPlaylistMetadata(data);
-      });
-  };
-
-  useEffect(() => {
-    fetchPlaylist();
-  }, []);
 
   const handleIsNowPlayingClicked = (buttonName) => {
     setButtonStates(() => ({
@@ -28,7 +13,6 @@ function Playlist({ handleSongSelect }) {
       upload: buttonName === 'upload',
     }));
   };
-  
 
   const highlightMenu = (buttonName) => {
     return buttonStates[buttonName] ? 'white' : 'grey';
@@ -44,11 +28,12 @@ function Playlist({ handleSongSelect }) {
             onClick={() => handleIsNowPlayingClicked('upload')}> Upload</h1>
       </div>
       <div className="playlist">
-        {playlistMetadata.map((song) => (
+        {console.log(playlistMetadata)}
+        {playlistMetadata?.map((song, index) => (
           <div className="song">
             <img className="thumbnail2" src={song.thumbnail} alt="thumbnail" />
             <div className="titleContainer">
-              <a onClick={() => handleSongSelect(song)}>{song.title}</a>
+              <a onClick={() => handleSongSelect(index)}>{song.title}</a>
               <p className="artist">{song.artist}</p>
             </div>
             <p className="runtime">{song.runtime}</p>

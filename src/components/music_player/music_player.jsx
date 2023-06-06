@@ -6,9 +6,26 @@ function music_player() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setCurrentDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [selectedSong, setSelectedSong] = useState({});
+  const [selectedSong, setSelectedSong] = useState(0);
+  const [playlistMetadata, setPlaylistMetadata] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const audioPlayerRef = useRef(null);
+
+  const fetchPlaylist = () => {
+    fetch("http://192.168.0.125:8000/api/list-songs")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setPlaylistMetadata(data);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchPlaylist();
+  }, []);
 
   useEffect(() => {
     // Update the duration state when the audio is loaded
@@ -28,6 +45,10 @@ function music_player() {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  const togglePlay = () => {
+    isPlaying ? audioPlayerRef.current.pause() : audioPlayerRef.current.play()
+    setIsPlaying((prevstate) => !prevstate)
+  }
   const play = () => {
     audioPlayerRef.current.play();
     setIsPlaying(true);
@@ -38,13 +59,12 @@ function music_player() {
     setIsPlaying(false);
   };
 
-  const changeSong = (songSrc) => {
-    setSelectedSong(songSrc);
-    console.log(audioPlayerRef);
+  const changeSong = (songIndex) => {
+    setSelectedSong(songIndex);
     audioPlayerRef.current.addEventListener("canplay", () => {
       audioPlayerRef.current.play();
       setIsPlaying(true);
-    }); // if (!isPlaying) { audioPlayerRef.current.play() }
+    });
   };
 
   const handleSeek = (e) => {
@@ -58,15 +78,14 @@ function music_player() {
       <div className="music_player_header background">
         <img
           className="thumbnail"
-          src={selectedSong.thumbnail}
+          src={playlistMetadata[selectedSong]?.thumbnail}
           alt="Yuuka album art"
-          onClick={isPlaying ? pause : play}
+          onClick={togglePlay}
         />
       </div>
-      <Playlist handleSongSelect={changeSong} />
-      <audio src={selectedSong.url} ref={audioPlayerRef}></audio>
+      {isLoading ? (<div></div>) : (<Playlist playlistMetadata={playlistMetadata} handleSongSelect={changeSong} />)}
+      <audio src={playlistMetadata[selectedSong]?.url} ref={audioPlayerRef}></audio>
       <div className="player background">
-        {/* <input type="range" id="volume-slider" max="100" value="100" /> */}
         <input
           type="range"
           id="seek-slider"
@@ -84,7 +103,7 @@ function music_player() {
             <button id="previous">
               <i className="fa-solid fa-backward"></i>
             </button>
-            <button onClick={isPlaying ? pause : play} id="play-icon">
+            <button onClick={togglePlay} id="play-icon">
               <i
                 className={isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"}
               ></i>
@@ -94,7 +113,7 @@ function music_player() {
             </button>
           </div>
           <h1 className="title">
-            {selectedSong.title ? selectedSong.title : "No Title"}{" "}
+            {playlistMetadata[selectedSong]?.title ? playlistMetadata[selectedSong]?.title : "No Title"}{" "}
           </h1>
         </div>
       </div>
