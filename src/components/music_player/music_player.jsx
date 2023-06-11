@@ -46,17 +46,8 @@ function music_player() {
   };
 
   const togglePlay = () => {
-    isPlaying ? audioPlayerRef.current.pause() : audioPlayerRef.current.play()
-    setIsPlaying((prevstate) => !prevstate)
-  }
-  const play = () => {
-    audioPlayerRef.current.play();
-    setIsPlaying(true);
-  };
-
-  const pause = () => {
-    audioPlayerRef.current.pause();
-    setIsPlaying(false);
+    isPlaying ? audioPlayerRef.current.pause() : audioPlayerRef.current.play();
+    setIsPlaying(!isPlaying);
   };
 
   const changeSong = (songIndex) => {
@@ -83,8 +74,18 @@ function music_player() {
           onClick={togglePlay}
         />
       </div>
-      {isLoading ? (<div></div>) : (<Playlist playlistMetadata={playlistMetadata} handleSongSelect={changeSong} />)}
-      <audio src={playlistMetadata[selectedSong]?.url} ref={audioPlayerRef}></audio>
+      {isLoading ? (
+        <div></div>
+      ) : (
+        <Playlist
+          playlistMetadata={playlistMetadata}
+          handleSongSelect={changeSong}
+        />
+      )}
+      <audio
+        src={playlistMetadata[selectedSong]?.url}
+        ref={audioPlayerRef}
+      ></audio>
       <div className="player background">
         <input
           type="range"
@@ -113,7 +114,9 @@ function music_player() {
             </button>
           </div>
           <h1 className="title">
-            {playlistMetadata[selectedSong]?.title ? playlistMetadata[selectedSong]?.title : "No Title"}{" "}
+            {playlistMetadata[selectedSong]?.title
+              ? playlistMetadata[selectedSong]?.title
+              : "No Title"}{" "}
           </h1>
         </div>
       </div>
