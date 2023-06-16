@@ -2,12 +2,14 @@
 .media-controls {
     background-color: #1f1f1f;
     width: 100%;
+    /* margin-top: rem; */
+    /* margin-top: -1rem; */
 }
 
 #seek-slider {
     width: 100%;
     position: relative;
-    top: 10px;
+    top: -10%;
 }
 
 .controls {
@@ -28,9 +30,11 @@
 }
 
 .control-buttons {
+    /* margin-top: -1rem; */
     display: flex;
     align-items: center;
     gap: 25px;
+    padding-bottom: 1rem;
 }
 
 .fa-solid {

@@ -26,7 +26,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef }) =>
       }, []);
     
   return (
-    <div className="media-controls-container">
+        <div className="media-controls">
         <input
           type="range"
           id="seek-slider"
@@ -36,7 +36,6 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef }) =>
           value={currentTime}
           onChange={handleSeek}
         />
-        <div className="media-controls">
           <span className="duration">
             {song?.runtime}
           </span>
@@ -63,7 +62,6 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef }) =>
             </h1>
           </div>
         </div>
-      </div>
   )
 }
 

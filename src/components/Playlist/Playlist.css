@@ -8,7 +8,6 @@
 }
 
 .song {
-    position: relative;
     display: flex;
     gap:15px;
     align-items: center;
@@ -51,11 +50,11 @@
     gap: 20px;
     /* height: 30rem; */
     /* height: 260px; */
-    padding-bottom: .5rem;
+    /* padding-bottom: .5rem; */
     overflow-y: scroll;
     justify-content: flex-start;
     /* margin-bottom: .75rem; */
-    margin-bottom: .75rem;
+    /* margin-bottom: 5rem; */
     flex: 2;
 }
 
