@@ -1,5 +1,5 @@
 import './App.css'
-import MusicPlayer from './components/music_player/music_player'
+import MusicPlayer from './components/MusicPlayer/MusicPlayer';
 
 function App() {
   return (
