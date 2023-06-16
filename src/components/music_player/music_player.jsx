@@ -62,6 +62,8 @@ function music_player() {
     const seekTime = parseFloat(e.target.value);
     audioPlayerRef.current.currentTime = seekTime;
     setCurrentTime(seekTime);
+    audioPlayerRef.current.play();
+    setIsPlaying(true);
   };
 
   return (
@@ -80,13 +82,14 @@ function music_player() {
         <Playlist
           playlistMetadata={playlistMetadata}
           handleSongSelect={changeSong}
+          togglePlay={togglePlay}
         />
       )}
       <audio
         src={playlistMetadata[selectedSong]?.url}
         ref={audioPlayerRef}
       ></audio>
-      <div className="player background">
+      <div className="media-controls-container">
         <input
           type="range"
           id="seek-slider"
@@ -96,28 +99,32 @@ function music_player() {
           value={currentTime}
           onChange={handleSeek}
         />
-        <span className="duration">
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </span>
-        <div className="control-buttons">
-          <div className="controls">
-            <button id="previous">
-              <i className="fa-solid fa-backward"></i>
-            </button>
-            <button onClick={togglePlay} id="play-icon">
-              <i
-                className={isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"}
-              ></i>
-            </button>
-            <button id="next">
-              <i className="fa-solid fa-forward"></i>
-            </button>
+        <div className="media-controls">
+          <span className="duration">
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </span>
+          <div className="control-buttons">
+            <div className="controls">
+              <button id="previous">
+                <i className="fa-solid fa-backward"></i>
+              </button>
+              <button onClick={togglePlay} id="play-icon">
+                <i
+                  className={
+                    isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"
+                  }
+                ></i>
+              </button>
+              <button id="next">
+                <i className="fa-solid fa-forward"></i>
+              </button>
+            </div>
+            <h1 className="title">
+              {playlistMetadata[selectedSong]?.title
+                ? playlistMetadata[selectedSong]?.title
+                : "No Title"}{" "}
+            </h1>
           </div>
-          <h1 className="title">
-            {playlistMetadata[selectedSong]?.title
-              ? playlistMetadata[selectedSong]?.title
-              : "No Title"}{" "}
-          </h1>
         </div>
       </div>
     </div>

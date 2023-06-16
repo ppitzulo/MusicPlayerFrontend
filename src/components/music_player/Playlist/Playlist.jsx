@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./Playlist.css";
 
-function Playlist({ playlistMetadata, handleSongSelect }) {
+function Playlist({ playlistMetadata, handleSongSelect, togglePlay }) {
   const [buttonStates, setButtonStates] = useState({
     nowPlaying: true,
     upload: false,
   });
   const [CSRFToken, setCSRFToken] = useState('')
+  const [formData, setFormData] = useState(new FormData());
 
 
   useEffect(() => {
-    fetch('https://192.168.0.125:8000/api/csrf-token')
+    fetch('http://192.168.0.125:8000/api/csrf-token')
         .then(response => response.json())
         .then(data => {
           setCSRFToken(data);
@@ -25,17 +26,19 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
   };
 
 
-  const handleFileUpload = (event) => {
-    const files = event.target.files; // Get the selected files
-    const formData = new FormData();
-  
-    // Append each file to the FormData object
+  const handleFileChange = (event) => {
+    // Assign files to be uploaded
+    const files = event.target.files;
+    const tempFormData = new FormData();
+
     for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
-      console.log(files[i])
+      tempFormData.append("files", files[i]);
     }
-    console.log(formData)
-  
+
+    setFormData(tempFormData);
+  };
+
+  const handleFileUpload = (event) => {
     fetch("http://192.168.0.125:8000/api/upload/", {
       method: "POST",
       headers: {
@@ -50,35 +53,37 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
     return buttonStates[buttonName] ? 'white' : 'grey';
   };
     return (
-    <div className="playlist-container">
-      <div className="header">
-        <h1 className="header-text"
-            style={{color: highlightMenu('nowPlaying')}}
-            onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Now Playing</h1>
-        <h1 className="header-text"
-            style={{ color: highlightMenu('upload')}}
-            onClick={() => handleIsNowPlayingClicked('upload')}> Upload</h1>
-      </div>
-      <div className="playlist">
-        {buttonStates['nowPlaying'] && playlistMetadata?.map((song, index) => (
-          <div className="song">
-            <img className="thumbnail2" src={song.thumbnail} alt="thumbnail" />
-            <div className="titleContainer">
-              <a onClick={() => handleSongSelect(index)}>{song.title}</a>
-              <p className="artist">{song.artist}</p>
+    // <div className="playlist-container">
+      <>
+        <div className="header">
+          <h1 className="header-text"
+              style={{color: highlightMenu('nowPlaying')}}
+              onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Now Playing</h1>
+          <h1 className="header-text"
+              style={{ color: highlightMenu('upload')}}
+              onClick={() => handleIsNowPlayingClicked('upload')}> Upload</h1>
+        </div>
+        <div className="playlist">
+          {buttonStates['nowPlaying'] && playlistMetadata?.map((song, index) => (
+            <div className="song">
+              <img className="thumbnail2" src={song.thumbnail} alt="thumbnail" onClick={() => handleSongSelect(index)}/>
+              <div className="titleContainer">
+                <a onClick={() => handleSongSelect(index)}>{song.title}</a>
+                <p className="artist">{song.artist}</p>
+              </div>
+              <p className="runtime">{song.runtime}</p>
+              {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> implement this later for desktop*/}
             </div>
-            <p className="runtime">{song.runtime}</p>
-            {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> implement this later for desktop*/}
+          ))}
+          {buttonStates['upload'] &&
+          <div className="upload-container">
+            <input type="file" multiple onChange={handleFileChange} />
+            <button type="submit" onClick={handleFileUpload}>Submit</button>
           </div>
-        ))}
-        {buttonStates['upload'] && 
-        <form action="/api/audio-upload" method="post" enctype="multipart/form-data">
-          <input type="file" multiple onChange={handleFileUpload} />
-          <button type="submit">Submit</button>
-        </form>
-        }
-      </div>
-    </div>
+          }
+        </div>
+      </>
+    // </div>
   );
 }
 

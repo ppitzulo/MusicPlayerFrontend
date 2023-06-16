@@ -12,8 +12,8 @@
   outline: 1px solid #f00 !important;
 } */
 
-html body {
-  height: 100vh;
+html, body, #root {
+  height: 100%;
 }
 
 body {

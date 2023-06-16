@@ -1,14 +1,9 @@
-.playlist-container {
-    margin: auto;
-    width: 100%;
-    overflow-y: scroll;
-}
-
 .header {
     border-bottom: 1.5px solid white;
     border-color: rgba(128, 128, 128, 0.8);
     font-size: 1.5rem;
     display: flex;
+    height: 26px;
     justify-content: space-around;
 }
 
@@ -16,11 +11,7 @@
     position: relative;
     display: flex;
     gap:15px;
-    /* justify-content: space-between; */
     align-items: center;
-    /* height: 75px; */
-    /* border-bottom: 1px solid grey; */
-    /* padding-bottom: 15px; */
 }
 
 .song:not(:last-child)::after {
@@ -35,17 +26,11 @@
 
 .thumbnail2 {
     border-radius: 5px;
-    width: 75px;
+    height: 5rem;
+    width: 5rem;
+    object-fit: cover
 }
 
-.test {
-    display: flex;
-    /* justify-content: space; */
-    gap: 15px;
-    align-items: center;
-    /* width: 200px; */
-    
-}
 
 .title {
     text-overflow: ellipsis;
@@ -54,19 +39,31 @@
 }
 
 .titleContainer {
-    /* width: 50%; */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .playlist {
-    margin: 15px 10px;
+    margin: 10px 10px 0px 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    /* height: 30rem; */
+    /* height: 260px; */
+    padding-bottom: .5rem;
+    overflow-y: scroll;
+    justify-content: flex-start;
+    /* margin-bottom: .75rem; */
+    margin-bottom: .75rem;
+    flex: 2;
 }
+
 
 .runtime {
     margin-left: auto;
+}
+
+.upload-container {
+    margin: auto;
 }
