@@ -8,7 +8,7 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
   });
   const [CSRFToken, setCSRFToken] = useState('')
   const [formData, setFormData] = useState(new FormData());
-
+  const [numOfSelectedFiles, setNumOfSelectedFiles] = useState(0);
 
   useEffect(() => {
     fetch('http://192.168.0.125:8000/api/csrf-token')
@@ -30,6 +30,7 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
     // Assign files to be uploaded
     const files = event.target.files;
     const tempFormData = new FormData();
+    setNumOfSelectedFiles(files.length);
 
     for (let i = 0; i < files.length; i++) {
       tempFormData.append("files", files[i]);
@@ -48,7 +49,12 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
     })
   };
 
-  
+  // const handleUserUploadText = (event) => {
+  //   files = event.target.files;
+  //   return files.length > 0 ? "Select your song(s)" : "You selected " + files.length + " files";
+  // };
+
+
   const highlightMenu = (buttonName) => {
     return buttonStates[buttonName] ? 'white' : 'grey';
   };
@@ -75,10 +81,11 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
           </div>
         ))}
         {buttonStates['upload'] &&
-        <div className="upload-container">
-          <input type="file" multiple onChange={handleFileChange} />
-          <button type="submit" onClick={handleFileUpload}>Submit</button>
-        </div>
+            <div className="upload">
+              <input type="file" id="file-upload" multiple onChange={handleFileChange} />
+              <label htmlFor="file-upload" className="custom-file-upload"> { numOfSelectedFiles > 0 ? "You selected " + numOfSelectedFiles + " files" : "Select your song(s)"} </label>
+              <button type="submit" onClick={handleFileUpload}>Submit</button>
+            </div>
         }
       </div>
     </>
