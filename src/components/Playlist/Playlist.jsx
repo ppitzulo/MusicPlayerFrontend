@@ -49,17 +49,11 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
     })
   };
 
-  // const handleUserUploadText = (event) => {
-  //   files = event.target.files;
-  //   return files.length > 0 ? "Select your song(s)" : "You selected " + files.length + " files";
-  // };
-
-
   const highlightMenu = (buttonName) => {
     return buttonStates[buttonName] ? 'white' : 'grey';
   };
     return (
-    <>
+    <div className="playlist-container">
       <div className="header">
         <h1 className="header-text"
             style={{color: highlightMenu('nowPlaying')}}
@@ -73,8 +67,8 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
           <div className="song" key={index}>
             <img className="thumbnail" src={song.thumbnail} alt="thumbnail" onClick={() => handleSongSelect(index)}/>
             <div className="titleContainer">
-              <a onClick={() => handleSongSelect(index)}>{song.title}</a>
-              <p className="artist">{song.artist}</p>
+              <a className="medium-font" onClick={() => handleSongSelect(index)}>{song.title}</a>
+              <p className="artist medium-font opaque">{song.artist}</p>
             </div>
             <p className="runtime">{song.runtime}</p>
             {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> implement this later for desktop*/}
@@ -88,7 +82,7 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
             </div>
         }
       </div>
-    </>
+    </div>
   );
 }
 

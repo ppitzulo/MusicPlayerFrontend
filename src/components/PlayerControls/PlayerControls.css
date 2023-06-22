@@ -2,8 +2,7 @@
 .media-controls {
     background-color: #1f1f1f;
     width: 100%;
-    /* margin-top: rem; */
-    /* margin-top: -1rem; */
+    grid-area: media-controls;
 }
 
 #seek-slider {

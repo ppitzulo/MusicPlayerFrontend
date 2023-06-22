@@ -50,26 +50,28 @@ function MusicPlayer() {
 
   return (
     <div id="music_player_container">
-      <div className="music_player_header background">
-        <img
-          className="album-art"
-          src={playlistMetadata[selectedSong]?.thumbnail}
-          alt="Album art"
-          onClick={() => { handleIsPlaying() }}
-        />
-      </div>
-      {isLoading ? (
-        <div></div>
-      ) : (
-        <Playlist
-          playlistMetadata={playlistMetadata}
-          handleSongSelect={changeSong}
-        />
-      )}
-      <audio
-        src={playlistMetadata[selectedSong]?.url}
-        ref={audioPlayerRef}
-      ></audio>
+        {/* <div className="test"> */}
+        <div className="music_player_header background">
+          <img
+            className="album-art"
+            src={playlistMetadata[selectedSong]?.thumbnail}
+            alt="Album art"
+            onClick={() => { handleIsPlaying() }}
+          />
+        </div>
+        {isLoading ? (
+          <div></div>
+        ) : (
+          <Playlist
+            playlistMetadata={playlistMetadata}
+            handleSongSelect={changeSong}
+          />
+        )}
+        <audio
+          src={playlistMetadata[selectedSong]?.url}
+          ref={audioPlayerRef}
+        ></audio>
+      {/* </div> */}
       <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef}/>
     </div>
   );
