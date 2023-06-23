@@ -31,6 +31,7 @@
 .control-buttons {
     /* margin-top: -1rem; */
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 25px;
     padding-bottom: 1rem;

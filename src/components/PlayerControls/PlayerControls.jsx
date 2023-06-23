@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./PlayerControls.css"
-const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef }) => {
+const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong }) => {
     const [currentTime, setCurrentTime] = useState(0);
   const [duration, setCurrentDuration] = useState(0);
 
@@ -9,7 +9,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef }) =>
     audioPlayerRef.current.currentTime = seekTime;
     setCurrentTime(seekTime);
     audioPlayerRef.current.play();
-    setIsPlaying(true);
+    if (!isPlaying) { handleIsPlaying(); }
   };
 
 

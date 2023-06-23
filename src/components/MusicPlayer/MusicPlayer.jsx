@@ -27,6 +27,37 @@ function MusicPlayer() {
   }
 
   useEffect(() => {
+    if ('mediaSession' in navigator && playlistMetadata.length != 0) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: playlistMetadata[selectedSong]?.title,
+        artist: playlistMetadata[selectedSong]?.artist,
+        // album: playlistMetadata[selectedSong]?.title,
+        artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
+        // ... set other metadata properties as needed
+      });
+    }
+  }, [isPlaying, selectedSong]);
+
+  useEffect(() => {
+    console.log("outside")
+    const handleEnded = () => {
+    console.log("handleended")
+      if (selectedSong < playlistMetadata.length) {
+    console.log("if")
+        changeSong(prevIndex => prevIndex + 1);
+        console.log(selectedSong)
+        // handleIsPlaying();
+      }
+    }
+
+    audioPlayerRef.current.addEventListener('ended', handleEnded);
+
+    return () => {
+      audioPlayerRef.current.removeEventListener('ended', handleEnded);
+    };
+  }, [selectedSong])
+
+  useEffect(() => {
     fetchPlaylist();
   }, []);
 
@@ -36,10 +67,7 @@ function MusicPlayer() {
     setIsPlaying(!isPlaying);
   };
 
-  useEffect((songIndex) => {
-    console.log(songIndex);
-    console.log(playlistMetadata)
-    // setSelectedSong(songIndex);
+  useEffect(() => {
     audioPlayerRef.current.addEventListener("loadedmetadata", () => {
       if (playlistMetadata.length > 0) {
         audioPlayerRef.current.play();
@@ -72,7 +100,7 @@ function MusicPlayer() {
           ref={audioPlayerRef}
         ></audio>
       {/* </div> */}
-      <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef}/>
+      <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={changeSong}/>
     </div>
   );
 }
