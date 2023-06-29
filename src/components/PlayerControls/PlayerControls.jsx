@@ -54,6 +54,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
               <button id="next">
                 <i className="fa-solid fa-forward"></i>
               </button>
+              {/* <span className="test-runtime">{song?.runtime}</span> */}
             </div>
             <h1 className="title">
               {song?.title

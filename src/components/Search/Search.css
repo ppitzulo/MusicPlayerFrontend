@@ -1,0 +1,29 @@
+.search {
+    grid-area: search;
+    margin: auto;
+}
+
+input[type=text] {
+    background-color: #0d0d0d;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    /* margin: auto; */
+    /* color: rgba(128, 128, 128, 1); */
+    font-size: 1.5rem;
+    min-width: 0;
+    /* flex: 1; */
+    /* margin: 1rem; */
+    /* color: inherit; */
+}
+
+input[type=text]:focus {
+    outline: none;
+    /* color: rgba(255, 255,255, 1); */
+}
+
+input:hover::placeholder {
+    color: white;
+    /* color: rgba(255, 255, 255, 1); */
+    /* color: #FFF; */
+}

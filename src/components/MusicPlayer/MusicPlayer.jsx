@@ -8,6 +8,7 @@ function MusicPlayer() {
   const [selectedSong, setSelectedSong] = useState(0);
   const [playlistMetadata, setPlaylistMetadata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([])
 
   const audioPlayerRef = useRef(null);
 
@@ -31,9 +32,7 @@ function MusicPlayer() {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: playlistMetadata[selectedSong]?.title,
         artist: playlistMetadata[selectedSong]?.artist,
-        // album: playlistMetadata[selectedSong]?.title,
         artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
-        // ... set other metadata properties as needed
       });
     }
   }, [isPlaying, selectedSong]);
@@ -62,10 +61,13 @@ function MusicPlayer() {
   }, []);
 
   const handleIsPlaying = () => {
-    console.log("isplaying");
     isPlaying ? audioPlayerRef.current.pause() : audioPlayerRef.current.play();
     setIsPlaying(!isPlaying);
   };
+  
+  const handleSearchResults = (results) => {
+    setSearchResults(results)
+  }
 
   useEffect(() => {
     audioPlayerRef.current.addEventListener("loadedmetadata", () => {
@@ -91,8 +93,9 @@ function MusicPlayer() {
           <div></div>
         ) : (
           <Playlist
-            playlistMetadata={playlistMetadata}
+            playlistMetadata={searchResults.length > 0 ? searchResults : playlistMetadata}
             handleSongSelect={changeSong}
+            handleSearchResults={handleSearchResults}
           />
         )}
         <audio

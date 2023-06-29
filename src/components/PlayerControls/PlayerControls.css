@@ -29,16 +29,19 @@
 }
 
 .control-buttons {
-    /* margin-top: -1rem; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 25px;
-    padding-bottom: 1rem;
 }
 
 .fa-solid {
     font-size: 1.4rem;
+    /* line-height: 1.5rem; */
+}
+
+.test-runtime {
+    margin-right: 1rem;
 }
 
 .title {
@@ -102,4 +105,16 @@ input[type="range"]::-webkit-slider-thumb {
 
 .duration {
     display: none;
+}
+
+@media (min-width: 992px) {
+    .controls {
+        width: 200px;
+    }
+    .fa-solid {
+        font-size: 2rem;
+
+        /* width: 80px; */
+        /* height: 80px; */
+    }
 }

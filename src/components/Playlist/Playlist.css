@@ -1,11 +1,20 @@
 .header {
-    border-bottom: 1.5px solid white;
-    border-color: rgba(128, 128, 128, 0.8);
+    border-bottom: 1.5px solid rgba(128, 128, 128, 0.8);
     font-size: 1.5rem;
     display: flex;
-    height: 26px;
+    /* height: 26px; */
     justify-content: space-around;
+    align-items: center;
+    /* gap: 1rem; */
 }
+
+.header-text {
+    margin: 1rem 2rem;
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+}
+
 
 .song {
     display: flex;
@@ -44,7 +53,7 @@
 
 .titleContainer {
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;        
     white-space: nowrap;
 }
 
@@ -58,20 +67,21 @@
 
 
 .playlist {
-    margin: 10px 10px 0px 10px;
+    margin: 0px 10px 0px 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     overflow-y: scroll;
     justify-content: flex-start;
     height: 100%;
+    padding: 10px 0;
 }
 
 
 .runtime {
     margin-left: auto;
+    margin-right: 1.5rem;
 }
-
 
 .upload {
     display: flex;

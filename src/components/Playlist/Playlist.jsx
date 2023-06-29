@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Playlist.css";
+import Search from "../Search/Search";
 
-function Playlist({ playlistMetadata, handleSongSelect }) {
+function Playlist({ playlistMetadata, handleSongSelect, handleSearchResults }) {
   const [buttonStates, setButtonStates] = useState({
     nowPlaying: true,
     upload: false,
@@ -57,7 +58,8 @@ function Playlist({ playlistMetadata, handleSongSelect }) {
       <div className="header">
         <h1 className="header-text"
             style={{color: highlightMenu('nowPlaying')}}
-            onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Now Playing</h1>
+            onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Queue</h1>
+        <Search setSearchResults={handleSearchResults}/>
         <h1 className="header-text"
             style={{ color: highlightMenu('upload')}}
             onClick={() => handleIsNowPlayingClicked('upload')}> Upload</h1>
