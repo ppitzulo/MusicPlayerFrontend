@@ -5,7 +5,7 @@ import PlayerControls from "../PlayerControls/PlayerControls";
 
 function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [selectedSong, setSelectedSong] = useState(0);
+  const [selectedSong, setSelectedSong] = useState({});
   const [playlistMetadata, setPlaylistMetadata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchResults, setSearchResults] = useState([])
@@ -19,33 +19,34 @@ function MusicPlayer() {
       })
       .then((data) => {
         setPlaylistMetadata(data);
+        setSelectedSong(data[0]);
         setIsLoading(false);
       });
   };
 
-  const changeSong = (song) => {
-    setSelectedSong(song);
+  const changeSong = (songID) => {
+    console.log(songID);
+    for (var song in playlistMetadata) {
+      console.log(song.id);
+      if (playlistMetadata[song].id === songID) { setSelectedSong(playlistMetadata[song]); }
+    }
   }
 
   useEffect(() => {
     if ('mediaSession' in navigator && playlistMetadata.length != 0) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title: playlistMetadata[selectedSong]?.title,
-        artist: playlistMetadata[selectedSong]?.artist,
-        artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
+        title: selectedSong?.title,
+        artist: selectedSong?.artist,
+        artwork: [{ src: selectedSong?.thumbnail, sizes: '512x512', type: 'image/png'}],
       });
     }
   }, [isPlaying, selectedSong]);
 
   useEffect(() => {
-    console.log("outside")
     const handleEnded = () => {
-    console.log("handleended")
+      // Edit this to incorporate the new database IDs instead of the old array positions
       if (selectedSong < playlistMetadata.length) {
-    console.log("if")
         changeSong(prevIndex => prevIndex + 1);
-        console.log(selectedSong)
-        // handleIsPlaying();
       }
     }
 
@@ -84,7 +85,7 @@ function MusicPlayer() {
         <div className="music_player_header background">
           <img
             className="album-art"
-            src={playlistMetadata[selectedSong]?.thumbnail}
+            src={selectedSong?.thumbnail}
             alt="Album art"
             onClick={() => { handleIsPlaying() }}
           />
@@ -99,7 +100,7 @@ function MusicPlayer() {
           />
         )}
         <audio
-          src={playlistMetadata[selectedSong]?.url}
+          src={selectedSong?.url}
           ref={audioPlayerRef}
         ></audio>
       {/* </div> */}

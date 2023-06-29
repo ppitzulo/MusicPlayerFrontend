@@ -9,6 +9,8 @@
     width: 100%;
     position: relative;
     top: -10%;
+    grid-area: seek;
+
 }
 
 .controls {
@@ -117,4 +119,12 @@ input[type="range"]::-webkit-slider-thumb {
         /* width: 80px; */
         /* height: 80px; */
     }
+}
+
+.test {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
 }

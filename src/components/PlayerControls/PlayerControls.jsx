@@ -39,29 +39,29 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
           <span className="duration">
             {song?.runtime}
           </span>
-          <div className="control-buttons">
-            <div className="controls">
-              <button id="previous">
-                <i className="fa-solid fa-backward"></i>
-              </button>
-              <button onClick={handleIsPlaying} id="play-icon">
-                <i
-                  className={
-                    isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"
-                  }
-                ></i>
-              </button>
-              <button id="next">
-                <i className="fa-solid fa-forward"></i>
-              </button>
-              {/* <span className="test-runtime">{song?.runtime}</span> */}
+            <div className="test">
+              <div className="controls">
+                <button id="previous">
+                  <i className="fa-solid fa-backward"></i>
+                </button>
+                <button onClick={handleIsPlaying} id="play-icon">
+                  <i
+                    className={
+                      isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"
+                    }
+                  ></i>
+                </button>
+                <button id="next">
+                  <i className="fa-solid fa-forward"></i>
+                </button>
+                {/* <span className="test-runtime">{song?.runtime}</span> */}
+              </div>
+              <h1 className="title">
+                {song?.title
+                  ? song?.title
+                  : "No Title"}
+              </h1>
             </div>
-            <h1 className="title">
-              {song?.title
-                ? song?.title
-                : "No Title"}
-            </h1>
-          </div>
         </div>
   )
 }
