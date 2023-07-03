@@ -12,6 +12,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
     if (!isPlaying) { handleIsPlaying(); }
   };
 
+  
 
     useEffect(() => {
         // Update the duration state when the audio is loaded
@@ -41,7 +42,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
           </span>
             <div className="test">
               <div className="controls">
-                <button id="previous">
+                <button id="previous" onClick={() => {changeSong('backward')}}>
                   <i className="fa-solid fa-backward"></i>
                 </button>
                 <button onClick={handleIsPlaying} id="play-icon">
@@ -51,7 +52,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
                     }
                   ></i>
                 </button>
-                <button id="next">
+                <button id="next" onClick={() => {changeSong('forward')}}>
                   <i className="fa-solid fa-forward"></i>
                 </button>
                 {/* <span className="test-runtime">{song?.runtime}</span> */}
