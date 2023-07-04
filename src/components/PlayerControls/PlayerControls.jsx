@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./PlayerControls.css"
 const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong }) => {
-    const [currentTime, setCurrentTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setCurrentDuration] = useState(0);
 
   const handleSeek = (e) => {
@@ -11,8 +11,6 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
     audioPlayerRef.current.play();
     if (!isPlaying) { handleIsPlaying(); }
   };
-
-  
 
     useEffect(() => {
         // Update the duration state when the audio is loaded

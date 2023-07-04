@@ -3,9 +3,29 @@ import "./Playlist.css";
 import Search from "../Search/Search";
 import Upload from "../Upload/Upload";
 
-function Playlist({ playlistMetadata, handleSongSelect, handleSearchResults }) {
+function Playlist({ playlistMetadata, handleSongSelect, handleSearchResults, isLoading, fetchNextPage}) {
 
-    return (
+  
+  let timeoutID;
+
+  useEffect(() => {
+    const playlistDiv = document.querySelector(".playlist");
+    const handleScroll = (event) => {
+      if (Math.round(playlistDiv.scrollHeight - playlistDiv.scrollTop) === playlistDiv.clientHeight && !isLoading) {
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(() => {
+          fetchNextPage();
+        }, 150);
+      }
+    };
+    
+    playlistDiv.addEventListener('scroll', handleScroll);
+    return () => {
+      playlistDiv.addEventListener('scroll', handleScroll);
+    }
+  }, [isLoading]);
+
+  return (
     <div className="playlist-container">
       <div className="header">
         <h1 className="header-text"
