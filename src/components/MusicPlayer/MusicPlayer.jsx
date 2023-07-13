@@ -13,10 +13,11 @@ function MusicPlayer() {
 
   const audioPlayerRef = useRef(null);
   const endOfData = useRef(false);
+  const backendURL = import.meta.env.VITE_BACKEND_URL
 
   useEffect(() => {
-    // Fetch playlist data
-    
+    // Fetch playlist data based on current page
+
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -24,7 +25,7 @@ function MusicPlayer() {
       return;
     }
 
-    fetch("http://192.168.0.125:8000/api/list-songs?page=" + page, { signal })
+    fetch(backendURL + "/api/list-songs?page=" + page, { signal })
       .then((response) => {
         let json = response.json();
         return json;
@@ -77,7 +78,7 @@ function MusicPlayer() {
     }
 
     if (playlistMetadata.length > 0) {
-      fetch(`http://192.168.0.125:8000/api/audio/${playlistMetadata[selectedSong]?.id}/`)
+      fetch(backendURL + `/api/audio/${playlistMetadata[selectedSong]?.id}/`)
         .then((response) => response.blob())
         .then((audioBlob) => {
           /* make sure to deallocate this */

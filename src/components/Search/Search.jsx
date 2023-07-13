@@ -3,13 +3,14 @@ import "./Search.css";
 
 const Search = ({ setSearchResults }) => {
     const [query, setQuery] = useState("");
+    const backendURL = import.meta.env.VITE_BACKEND_URL
 
     useEffect(() => {
         if (query == '') {
             setSearchResults([]);            
         }
         else {
-            fetch("http://192.168.0.125:8000/api/search/?search=" + query)
+            fetch(backendURL + "/api/search/?search=" + query)
             .then((response) => {
               if (response == '') {
                   return [];

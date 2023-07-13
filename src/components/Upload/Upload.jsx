@@ -5,9 +5,10 @@ import "./Upload.css";
 const Upload = () => {
     const [CSRFToken, setCSRFToken] = useState("");
     const [uploading, setUploading] = useState(false);
+    const backendURL = import.meta.env.VITE_BACKEND_URL
 
     useEffect(() => {
-        fetch("http://192.168.0.125:8000/api/csrf-token")
+        fetch(backendURL + "/api/csrf-token")
         .then((response) => response.json())
         .then((data) => {
             setCSRFToken(data);
@@ -15,7 +16,7 @@ const Upload = () => {
     }, []);
 
     const handleFileUpload = (event) => {
-        handleSetUploading(true);
+        setUploading(true);
         const files = event.target.files;
         const formData = new FormData();
 
@@ -23,7 +24,7 @@ const Upload = () => {
             formData.append("files", files[i]);
         }
 
-        fetch("http://192.168.0.125:8000/api/upload/", {
+        fetch(backendURL + "/api/upload/", {
             method: "POST",
             headers: {
                 "X-CSRFToken": CSRFToken,
@@ -32,13 +33,14 @@ const Upload = () => {
         })
         .then((response) => response.json())
         .then(() => {
-            handleSetUploading(false);
+            setUploading(false);
         })
         .catch((error) => {
-            handleSetUploading(false);
+            setUploading(false);
             console.error("Upload erorr:", error);
         });
     };
+ 
 
     return (
         <>
