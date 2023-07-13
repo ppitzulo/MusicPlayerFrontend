@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState } from "react";
 import "./Playlist.css";
 import Search from "../Search/Search";
 import Upload from "../Upload/Upload";
@@ -6,9 +6,15 @@ import Upload from "../Upload/Upload";
 function Playlist({
   playlistMetadata,
   handleSongSelect,
-  handleSearchResults,
   fetchNextPage,
 }) {
+
+  const [searchResults, setSearchResults] = useState([])
+
+  const handleSearch = () => {
+    if (searchResults.length > 0) { return searchResults; }
+    return playlistMetadata;
+  }
 
   const handleScroll = () => {
     const playlistDiv = document.querySelector(".playlist");
@@ -25,11 +31,11 @@ function Playlist({
   return (
     <div className="playlist-container">
       <div className="header">
-        <Search setSearchResults={handleSearchResults} />
+        <Search setSearchResults={setSearchResults} />
         <Upload />
       </div>
       <div className="playlist flex" onScroll={handleScroll}>
-        { playlistMetadata?.map((song) => (
+        { handleSearch().map((song) => (
           <div className="song" key={song.id}>
             <img
               className="album-art small-album-art"

@@ -8,9 +8,8 @@ function MusicPlayer() {
   const [selectedSong, setSelectedSong] = useState(0);
   const [playlistMetadata, setPlaylistMetadata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchResults, setSearchResults] = useState([])
   const [page, setPage] = useState(1);
-  const [tempURL, setTempURL] = useState("");
+  const [audioBlobURL, setAudioBlobURL] = useState("");
 
   let previousPage = null;
   const audioPlayerRef = useRef(null);
@@ -65,15 +64,20 @@ function MusicPlayer() {
   }, [isPlaying]);
 
   useEffect(() => {
+    // Deallocate old audio blob if exists
+    if (audioBlobURL !== "") {
+      URL.revokeObjectURL(audioBlobURL)
+    }
+
     if (playlistMetadata.length > 0) {
       fetch(`http://192.168.0.125:8000/api/audio/${playlistMetadata[selectedSong]?.id}/`)
         .then((response) => response.blob())
         .then((audioBlob) => {
           /* make sure to deallocate this */
-          setTempURL(URL.createObjectURL(audioBlob));
+          setAudioBlobURL(URL.createObjectURL(audioBlob));
         })
         .catch((error) => {
-          // Handle any error that occurred during the request
+          console.log(error);
         });
     }
     }, [isLoading, selectedSong]);
@@ -81,10 +85,6 @@ function MusicPlayer() {
   const handleIsPlaying = () => {
     setIsPlaying(!isPlaying);
   };
-  
-  const handleSearchResults = (results) => {
-    setSearchResults(results)
-  }
   
   const navigatePlaylist = (direction) => {
     if (direction === 'forward') {
@@ -118,14 +118,13 @@ function MusicPlayer() {
           <div></div>
         ) : (
           <Playlist
-            playlistMetadata={searchResults.length > 0 ? searchResults : playlistMetadata}
+            playlistMetadata={playlistMetadata}
             handleSongSelect={changeSong}
-            handleSearchResults={handleSearchResults}
             fetchNextPage={fetchNextPage}
           />
         )}
         <audio
-          src={tempURL}
+          src={audioBlobURL}
           ref={audioPlayerRef}
           onEnded={() => navigatePlaylist('forward')}
           onPlay={() => loadMetadata()}
