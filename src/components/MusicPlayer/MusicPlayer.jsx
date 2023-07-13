@@ -11,19 +11,20 @@ function MusicPlayer() {
   const [page, setPage] = useState(1);
   const [audioBlobURL, setAudioBlobURL] = useState("");
 
-  let previousPage = null;
   const audioPlayerRef = useRef(null);
   const endOfData = useRef(false);
 
-  const fetchPlaylist = () => {
-    /* Prevent function from fetching the same page twice */
-    if (previousPage === page || endOfData.current) {
+  useEffect(() => {
+    // Fetch playlist data
+    
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    if (endOfData.current) {
       return;
     }
-    else {
-      previousPage = page;
-    }
-    fetch("http://192.168.0.125:8000/api/list-songs?page=" + page)
+
+    fetch("http://192.168.0.125:8000/api/list-songs?page=" + page, { signal })
       .then((response) => {
         let json = response.json();
         return json;
@@ -32,13 +33,20 @@ function MusicPlayer() {
         if (data.length === 0) { endOfData.current = true; }
         setPlaylistMetadata(prevPlaylistMetadata => [...prevPlaylistMetadata, ...data]);
         setIsLoading(false);
+      }).catch(err => {
+        if (err.name === "AbortError") {
+          console.log("Canceled duplicate request.");
+        }
+        else {
+          console.log(err);
+        }
       });
-    };
-    
-  
-    useEffect(() => {
-      fetchPlaylist();
+
+      return () => {
+        controller.abort();
+      };
     }, [page]);
+
 
   const changeSong = (songID) => {
     for (let song = 0; song < playlistMetadata.length; song++) {
@@ -56,7 +64,6 @@ function MusicPlayer() {
 
   const fetchNextPage = () => {
     setPage(prevPage => prevPage + 1);
-    previousPage = page;
   }
 
   useEffect(() => {
