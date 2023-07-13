@@ -28,8 +28,6 @@ const Search = ({ setSearchResults }) => {
         setQuery(event.target.value);
     }
 
-
-
     return (
         <input type="text"
                 value={query}

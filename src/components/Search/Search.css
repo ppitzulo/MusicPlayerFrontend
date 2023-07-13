@@ -3,15 +3,16 @@
     margin: auto;
 }
 
-input[type=text] {
+input[type="text"] {
     background-color: #0d0d0d;
     text-align: center;
     border: none;
     border-radius: 10px;
     font-size: 1.5rem;
     min-width: 0;
+    margin: 1rem;
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
     outline: none;
 }

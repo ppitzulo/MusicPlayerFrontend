@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import "./PlayerControls.css"
 const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong }) => {
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setCurrentDuration] = useState(0);
+  const [duration, setCurrentDuration] = useState(19);
 
   const handleSeek = (e) => {
     const seekTime = parseFloat(e.target.value);
     audioPlayerRef.current.currentTime = seekTime;
-    setCurrentTime(seekTime);
     audioPlayerRef.current.play();
     if (!isPlaying) { handleIsPlaying(); }
   };
@@ -33,7 +32,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
           step="0.01"
           max={duration}
           value={currentTime}
-          onChange={handleSeek}
+          onChange={(event) => handleSeek(event)}
         />
           <span className="duration">
             {song?.runtime}
@@ -59,6 +58,9 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
                 {song?.title
                   ? song?.title
                   : "No Title"}
+              </h1>
+              <h1>
+                Upload
               </h1>
             </div>
         </div>

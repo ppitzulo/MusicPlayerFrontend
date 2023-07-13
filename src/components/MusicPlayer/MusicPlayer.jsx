@@ -10,72 +10,75 @@ function MusicPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchResults, setSearchResults] = useState([])
   const [page, setPage] = useState(1);
+  const [tempURL, setTempURL] = useState("");
 
   let previousPage = null;
   const audioPlayerRef = useRef(null);
+  const endOfData = useRef(false);
 
   const fetchPlaylist = () => {
-    if (previousPage === page) {
+    /* Prevent function from fetching the same page twice */
+    if (previousPage === page || endOfData.current) {
       return;
     }
     else {
       previousPage = page;
     }
-
     fetch("http://192.168.0.125:8000/api/list-songs?page=" + page)
       .then((response) => {
-        return response.json();
+        let json = response.json();
+        return json;
       })
       .then((data) => {
+        if (data.length === 0) { endOfData.current = true; }
         setPlaylistMetadata(prevPlaylistMetadata => [...prevPlaylistMetadata, ...data]);
         setIsLoading(false);
       });
-  };
+    };
+    
+  
+    useEffect(() => {
+      fetchPlaylist();
+    }, [page]);
 
   const changeSong = (songID) => {
-    // for (const song of playlistMetadata) {
-    //   if (song.id === songID) {
-    //     setSelectedSong(song);
-    //   }
-    // }
     for (let song = 0; song < playlistMetadata.length; song++) {
       if (playlistMetadata[song].id === songID) { setSelectedSong(song); }
     }
   }
 
-  useEffect(() => {
-    if ('mediaSession' in navigator && !isLoading && playlistMetadata.length != 0) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: playlistMetadata[selectedSong]?.title,
-        artist: playlistMetadata[selectedSong]?.artist,
-        artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
-      });
-    }
-  }, [isPlaying, selectedSong]);
+  const loadMetadata = () => {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: playlistMetadata[selectedSong]?.title,
+      artist: playlistMetadata[selectedSong]?.artist,
+      artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
+    });
+  }
 
-  useEffect(() => {
-    const handleEnded = () => {
-      navigatePlaylist('forward');
-    }
-
-    audioPlayerRef.current.addEventListener('ended', handleEnded);
-
-    return () => {
-      audioPlayerRef.current.removeEventListener('ended', handleEnded);
-    };
-  }, [selectedSong])
-
-  useEffect(() => {
-    fetchPlaylist();
-  }, [page]);
-
-  const handleSetPage = () => {
+  const fetchNextPage = () => {
     setPage(prevPage => prevPage + 1);
     previousPage = page;
   }
 
+  useEffect(() => {
+    isPlaying ? audioPlayerRef.current.play() : audioPlayerRef.current.pause();
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (playlistMetadata.length > 0) {
+      fetch(`http://192.168.0.125:8000/api/audio/${playlistMetadata[selectedSong]?.id}/`)
+        .then((response) => response.blob())
+        .then((audioBlob) => {
+          /* make sure to deallocate this */
+          setTempURL(URL.createObjectURL(audioBlob));
+        })
+        .catch((error) => {
+          // Handle any error that occurred during the request
+        });
+    }
+    }, [isLoading, selectedSong]);
+
   const handleIsPlaying = () => {
-    isPlaying ? audioPlayerRef.current.pause() : audioPlayerRef.current.play();
     setIsPlaying(!isPlaying);
   };
   
@@ -103,9 +106,9 @@ function MusicPlayer() {
 
   return (
     <div id="music_player_container">
-        <div className="music_player_header background">
+        <div className="music_player_header background flex">
           <img
-            className="album-art"
+            className="album-art large-album"
             src={playlistMetadata[selectedSong]?.thumbnail}
             alt="Album art"
             onClick={() => { handleIsPlaying() }}
@@ -118,13 +121,14 @@ function MusicPlayer() {
             playlistMetadata={searchResults.length > 0 ? searchResults : playlistMetadata}
             handleSongSelect={changeSong}
             handleSearchResults={handleSearchResults}
-            isLoading={isLoading}
-            fetchNextPage={handleSetPage}
+            fetchNextPage={fetchNextPage}
           />
         )}
         <audio
-          src={playlistMetadata[selectedSong]?.url}
+          src={tempURL}
           ref={audioPlayerRef}
+          onEnded={() => navigatePlaylist('forward')}
+          onPlay={() => loadMetadata()}
         ></audio>
       {/* </div> */}
       <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/>

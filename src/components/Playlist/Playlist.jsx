@@ -1,44 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Playlist.css";
 import Search from "../Search/Search";
 import Upload from "../Upload/Upload";
 
-function Playlist({ playlistMetadata, handleSongSelect, handleSearchResults, isLoading, fetchNextPage}) {
+function Playlist({
+  playlistMetadata,
+  handleSongSelect,
+  handleSearchResults,
+  fetchNextPage,
+}) {
 
-  
-  let timeoutID;
-
-  useEffect(() => {
+  const handleScroll = () => {
     const playlistDiv = document.querySelector(".playlist");
-    const handleScroll = (event) => {
-      if (Math.round(playlistDiv.scrollHeight - playlistDiv.scrollTop) === playlistDiv.clientHeight && !isLoading) {
-        clearTimeout(timeoutID);
-        timeoutID = setTimeout(() => {
-          fetchNextPage();
-        }, 150);
-      }
-    };
+
+    let scrollDistance = Math.round(
+      playlistDiv.scrollTop + playlistDiv.offsetHeight
+    );
     
-    playlistDiv.addEventListener('scroll', handleScroll);
-    return () => {
-      playlistDiv.addEventListener('scroll', handleScroll);
+    if (scrollDistance === playlistDiv.scrollHeight) {
+      fetchNextPage();
     }
-  }, [isLoading]);
+  };
 
   return (
     <div className="playlist-container">
       <div className="header">
-        <h1 className="header-text"
-            onClick={() => handleIsNowPlayingClicked('nowPlaying')}>Queue</h1>
-        <Search setSearchResults={handleSearchResults}/>
+        <Search setSearchResults={handleSearchResults} />
         <Upload />
       </div>
-      <div className="playlist">
-        {playlistMetadata?.map((song, index) => (
+      <div className="playlist flex" onScroll={handleScroll}>
+        { playlistMetadata?.map((song) => (
           <div className="song" key={song.id}>
-            <img className="thumbnail" src={song.thumbnail} alt="thumbnail" onClick={() => handleSongSelect(song.id)}/>
+            <img
+              className="album-art small-album-art"
+              src={song.thumbnail}
+              alt="thumbnail"
+              onClick={() => handleSongSelect(song.id)}
+            />
             <div className="titleContainer">
-              <a className="medium-font" onClick={() => handleSongSelect(song.id)}>{song.title}</a>
+              <a
+                className="medium-font"
+                onClick={() => handleSongSelect(song.id)}
+              >
+                {song.title}
+              </a>
               <p className="artist medium-font opaque">{song.artist}</p>
             </div>
             <p className="runtime">{song.runtime}</p>

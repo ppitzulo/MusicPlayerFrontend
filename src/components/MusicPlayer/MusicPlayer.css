@@ -1,9 +1,21 @@
 .album-art {
     border-radius: 8px;
     object-fit: cover;
-    width: 50%;
     aspect-ratio: 1;
+}
+
+.large-album {
+    width: 50%;
     margin: auto;
+}
+
+.small-album-art {
+    width: 10%;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -17,7 +29,7 @@ h1 {
     padding: 0;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 6fr 1fr;
+    grid-template-rows: 1fr 6fr 75px;
     grid-template-areas:
         "thumbnail"
         "playlist"
@@ -26,8 +38,6 @@ h1 {
 
 .background {
     background-color: #0d0d0d;
-    display: flex;
-    flex-direction: column;
 }
 
 .music_player_header {
@@ -37,8 +47,6 @@ h1 {
 
 
 .test {
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     flex-grow: 1;
 }
@@ -46,9 +54,9 @@ h1 {
 @media (min-width: 992px) {
     #music_player_container {
         grid-template-columns: 60% 40%;
-        grid-template-rows: auto 10fr 1fr;
+        grid-template-rows: auto 10fr .5fr;
         grid-template-areas:
-            "search search"
+            "thumbnail search"
             "thumbnail playlist"
             "media-controls media-controls"
     }
