@@ -2,8 +2,6 @@
     width: 24px;
     height: 24px;
     border: 5px solid #FFF;
-    /* padding: 1rem; */
-    /* margin: 2rem; */
     margin: 1rem 2rem;
     border-bottom-color: transparent;
     border-radius: 50%;
@@ -21,13 +19,14 @@
     }
 } 
 
-.custom-file-upload {
-    font-size: 1.4rem;
+.uploadIcon {
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 1rem;
 }
 
-.header-text {
-    margin: 1rem 2rem;
-    white-space: nowrap;
-    flex: 1;
-    text-align: center;
+@media (min-width: 992px) {
+    .uploadIcon {
+        margin: 0rem;
+    }
 }

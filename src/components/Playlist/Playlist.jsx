@@ -32,7 +32,7 @@ function Playlist({
     <div className="playlist-container">
       <div className="header">
         <Search setSearchResults={setSearchResults} />
-        <Upload />
+        {/* <Upload /> */}
       </div>
       <div className="playlist flex" onScroll={handleScroll}>
         { handleSearch().map((song) => (

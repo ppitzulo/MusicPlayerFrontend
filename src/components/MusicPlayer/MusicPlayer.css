@@ -1,16 +1,15 @@
 .album-art {
-    border-radius: 8px;
-    object-fit: cover;
-    aspect-ratio: 1;
+    cursor: pointer;
 }
 
 .large-album {
-    width: 50%;
+    width: 60%;
+    min-width: 20rem;
     margin: auto;
 }
 
 .small-album-art {
-    width: 10%;
+    max-width: 10%;
 }
 
 .flex {
@@ -29,11 +28,10 @@ h1 {
     padding: 0;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 6fr 75px;
     grid-template-areas:
         "thumbnail"
         "playlist"
-        "media-controls"
+        "media-controls-container"
 }
 
 .background {
@@ -46,7 +44,7 @@ h1 {
 }
 
 
-.test {
+.media-controls {
     overflow: hidden;
     flex-grow: 1;
 }
@@ -58,6 +56,6 @@ h1 {
         grid-template-areas:
             "thumbnail search"
             "thumbnail playlist"
-            "media-controls media-controls"
+            "media-controls-container media-controls-container"
     }
 }
