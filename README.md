@@ -35,5 +35,8 @@ Before you begin, make sure you have the following installed:
    npm start
    ```
 
+### Configuration
+
+By default the frontend is configured to communicate with a backend located at `localhost:8000` this can be modifed in the .env file to your liking.
 ## License
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
