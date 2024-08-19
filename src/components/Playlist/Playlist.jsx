@@ -1,7 +1,7 @@
 import React, {useState } from "react";
 import "./Playlist.css";
-import Search from "../Search/Search";
-import Upload from "../Upload/Upload";
+// import Search from "../Search/Search";
+// import Upload from "../Upload/Upload";
 
 function Playlist({
   playlistMetadata,
@@ -12,7 +12,7 @@ function Playlist({
   const [searchResults, setSearchResults] = useState([])
 
   const handleSearch = () => {
-    if (searchResults.length > 0) { return searchResults; }
+    // if (searchResults.length > 0) { return searchResults; }
     return playlistMetadata;
   }
 
@@ -29,13 +29,8 @@ function Playlist({
   };
 
   return (
-    <div className="playlist-container">
-      <div className="header">
-        <Search setSearchResults={setSearchResults} />
-        {/* <Upload /> */}
-      </div>
       <div className="playlist flex" onScroll={handleScroll}>
-        { handleSearch().map((song) => (
+        { playlistMetadata.map((song) => (
           <div className="song" key={song.id}>
             <img
               className="album-art small-album-art"
@@ -57,7 +52,6 @@ function Playlist({
           </div>
         ))}
       </div>
-    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./MusicPlayer.css";
 import Playlist from "../Playlist/Playlist";
+import Library from "../Library/Library";
 import PlayerControls from "../PlayerControls/PlayerControls";
 
 function MusicPlayer() {
@@ -43,10 +44,10 @@ function MusicPlayer() {
         }
       });
 
-      return () => {
-        controller.abort();
-      };
-    }, [page]);
+    return () => {
+      controller.abort();
+    };
+  }, [page]);
 
 
   const changeSong = (songID) => {
@@ -59,7 +60,7 @@ function MusicPlayer() {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: playlistMetadata[selectedSong]?.title,
       artist: playlistMetadata[selectedSong]?.artist,
-      artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png'}],
+      artwork: [{ src: playlistMetadata[selectedSong]?.thumbnail, sizes: '512x512', type: 'image/png' }],
     });
   }
 
@@ -88,12 +89,12 @@ function MusicPlayer() {
           console.log(error);
         });
     }
-    }, [isLoading, selectedSong]);
+  }, [isLoading, selectedSong]);
 
   const handleIsPlaying = () => {
     setIsPlaying(!isPlaying);
   };
-  
+
   const navigatePlaylist = (direction) => {
     if (direction === 'forward') {
       if (selectedSong < playlistMetadata.length - 1) { setSelectedSong(prevSong => prevSong + 1); }
@@ -114,15 +115,15 @@ function MusicPlayer() {
 
   return (
     <div id="music_player_container">
-        <div className="music_player_header background flex">
-          <img
-            className="album-art large-album"
-            src={playlistMetadata[selectedSong]?.thumbnail}
-            alt="Album art"
-            onClick={() => { handleIsPlaying() }}
-          />
-        </div>
-        {isLoading ? (
+      <div className="music_player_header background flex">
+        <img
+          className="album-art large-album"
+          src={playlistMetadata[selectedSong]?.thumbnail}
+          alt="Album art"
+          onClick={() => { handleIsPlaying() }}
+        />
+      </div>
+      {/* {isLoading ? (
           <div></div>
         ) : (
           <Playlist
@@ -130,15 +131,19 @@ function MusicPlayer() {
             handleSongSelect={changeSong}
             fetchNextPage={fetchNextPage}
           />
-        )}
-        <audio
-          src={audioBlobURL}
-          ref={audioPlayerRef}
-          onEnded={() => navigatePlaylist('forward')}
-          onPlay={() => loadMetadata()}
-        ></audio>
+        )} */}
+      <audio
+        src={audioBlobURL}
+        ref={audioPlayerRef}
+        onEnded={() => navigatePlaylist('forward')}
+        onPlay={() => loadMetadata()}
+      ></audio>
       {/* </div> */}
-      <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/>
+      <Library playlistMetadata={playlistMetadata}
+        handleSongSelect={changeSong}
+        fetchNextPage={fetchNextPage} />
+      {/* Library This will contain the songs coming up next along with any playlists the user has created*/}
+      {/* <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/> */}
     </div>
   );
 }

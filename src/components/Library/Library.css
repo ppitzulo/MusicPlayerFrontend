@@ -1,0 +1,29 @@
+.library-container {
+    grid-area: library;
+    background-color: #1b1b1b;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2rem;
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+    padding: .8rem;
+    border-bottom: 1px solid #555;
+}
+
+.nav-item:hover {
+    cursor: pointer;
+}
+
+.nav-item.active {
+    border-bottom: 1px solid #fff;
+}
