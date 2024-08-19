@@ -1,16 +1,30 @@
 .library-container {
     grid-area: library;
-    background-color: #1b1b1b;
+    /* background-color: #1b1b1b; */
     display: flex;
     flex-direction: column;
-    height: 100%;
     overflow: hidden;
+    height: auto;
+    background-color: rgba(13, 13, 13, 1);
+    transition: background-color .4s ease-in-out;
 }
 
 .navbar {
     display: flex;
     justify-content: space-around;
     font-size: 1.2rem;
+}
+
+.navbar.closed {
+    
+}
+
+.navbar.closed .nav-item {
+    border-bottom: none;
+}
+
+.library-container.open {
+    background-color: rgba(27, 27, 27, 1);
 }
 
 .nav-item {
@@ -26,4 +40,19 @@
 
 .nav-item.active {
     border-bottom: 1px solid #fff;
+}
+
+.menu-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s ease-in-out;
+    height: auto;
+}
+
+.menu-content.open {
+    max-height: 80vh;
+}
+
+.playlists-container {
+    height: 80vh;
 }

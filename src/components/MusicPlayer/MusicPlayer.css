@@ -28,12 +28,11 @@ h1 {
     padding: 0;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto min-content;
     grid-template-areas:
         "thumbnail"
-        /* "playlist" */
-        "library"
-        /* "media-controls-container" */
+        "media-controls"
+        "library";
 }
 
 .background {

@@ -1,6 +1,7 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import Playlist from '../Playlist/Playlist'
 import "./Library.css"
+import { Simulate } from 'react-dom/test-utils'
 
 function Playlists() {
     return (
@@ -15,8 +16,49 @@ function Playlists() {
     )
 }
 
+function navbar(isLibraryOpen, openMenu, handleMenuClick) {
+    if (isLibraryOpen) {
+        return (
+            <div className="navbar open">
+                <div className={`nav-item ${openMenu === "Now Playing" ? "active" : ""}`} onClick={() => handleMenuClick("Now Playing")}>Now Playing</div>
+                <div className={`nav-item ${openMenu === "Playlists" ? "active" : ""}`} onClick={() => handleMenuClick("Playlists")}>Playlists</div>
+                {/* <div className="nav-item">Artists</div> This might be a good idea for later*/}
+            </div>
+        )
+    }
+    else {
+        return (
+            <div className="navbar closed">
+                <div className={`nav-item ${openMenu === "Now Playing" ? "active" : ""}`} onClick={() => handleMenuClick("Now Playing")}>Now Playing</div>
+                <div className={`nav-item ${openMenu === "Playlists" ? "active" : ""}`} onClick={() => handleMenuClick("Playlists")}>Playlists</div>
+                {/* <div className="nav-item">Artists</div> This might be a good idea for later*/}
+            </div>
+        )
+    }
+}
+
 function Library({ playlistMetadata, handleSongSelect, fetchNextPage }) {
     const [openMenu, setOpenMenu] = useState("Now Playing");
+    const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+    const libraryRef = useRef(null);
+
+    const handleMenuClick = (selectedMenu) => {
+        setOpenMenu(selectedMenu)
+        setIsLibraryOpen(true);
+    }
+
+    const handleClickOutside = (event) => {
+        if (libraryRef.current && !libraryRef.current.contains(event.target)) {
+            setIsLibraryOpen(false); // Close the library when clicking outside
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const renderMenu = () => {
         if (openMenu === "Now Playing") {
@@ -27,13 +69,11 @@ function Library({ playlistMetadata, handleSongSelect, fetchNextPage }) {
     }
 
     return (
-        <div className="library-container">
-            <div className="navbar">
-                <div className={`nav-item ${openMenu === "Now Playing" ? "active" : ""}`} onClick={() => setOpenMenu("Now Playing")}>Now Playing</div>
-                <div className={`nav-item ${openMenu === "Playlists" ? "active" : ""}`} onClick={() => setOpenMenu("Playlists")}>Playlists</div>
-                {/* <div className="nav-item">Artists</div> This might be a good idea for later*/}
+        <div className={`library-container ${isLibraryOpen ? "open" : ""}`} ref={libraryRef}>
+            {navbar(isLibraryOpen, openMenu, handleMenuClick)}
+            <div className={`menu-content ${isLibraryOpen ? "open" : ""}`}>
+                {renderMenu()}
             </div>
-            {renderMenu()}
         </div>
     )
 }

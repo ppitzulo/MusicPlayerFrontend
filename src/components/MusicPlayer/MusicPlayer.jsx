@@ -123,27 +123,16 @@ function MusicPlayer() {
           onClick={() => { handleIsPlaying() }}
         />
       </div>
-      {/* {isLoading ? (
-          <div></div>
-        ) : (
-          <Playlist
-            playlistMetadata={playlistMetadata}
-            handleSongSelect={changeSong}
-            fetchNextPage={fetchNextPage}
-          />
-        )} */}
       <audio
         src={audioBlobURL}
         ref={audioPlayerRef}
         onEnded={() => navigatePlaylist('forward')}
         onPlay={() => loadMetadata()}
       ></audio>
-      {/* </div> */}
+      <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/>
       <Library playlistMetadata={playlistMetadata}
         handleSongSelect={changeSong}
         fetchNextPage={fetchNextPage} />
-      {/* Library This will contain the songs coming up next along with any playlists the user has created*/}
-      {/* <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/> */}
     </div>
   );
 }
