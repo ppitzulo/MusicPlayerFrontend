@@ -20,6 +20,8 @@
 }
 
 .title {
+    /* text-align: center; */
+    width: 80%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -39,15 +41,15 @@
     color: rgba(255, 255, 255, .3);
 }
 
-
 .playlist {
     margin: 0px 10px 0px 10px;
     gap: 20px;
     overflow-y: auto;
     justify-content: flex-start;
     padding: 10px 0;
+    display: flex;
+    flex-direction: column;
 }
-
 
 .runtime {
     margin-left: auto;

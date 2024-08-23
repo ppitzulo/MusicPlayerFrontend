@@ -1,7 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react'
 import Playlist from '../Playlist/Playlist'
 import "./Library.css"
-import { Simulate } from 'react-dom/test-utils'
 
 function Playlists() {
     return (
@@ -37,9 +36,8 @@ function navbar(isLibraryOpen, openMenu, handleMenuClick) {
     }
 }
 
-function Library({ playlistMetadata, handleSongSelect, fetchNextPage }) {
+function Library({ playlistMetadata, handleSongSelect, fetchNextPage, isLibraryOpen, setIsLibraryOpen }) {
     const [openMenu, setOpenMenu] = useState("Now Playing");
-    const [isLibraryOpen, setIsLibraryOpen] = useState(false);
     const libraryRef = useRef(null);
 
     const handleMenuClick = (selectedMenu) => {

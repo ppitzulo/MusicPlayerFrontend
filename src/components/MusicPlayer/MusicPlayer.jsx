@@ -11,6 +11,7 @@ function MusicPlayer() {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [audioBlobURL, setAudioBlobURL] = useState("");
+  const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
   const audioPlayerRef = useRef(null);
   const endOfData = useRef(false);
@@ -113,15 +114,27 @@ function MusicPlayer() {
     });
   }, [selectedSong]);
 
+  const song = playlistMetadata[selectedSong];
+
   return (
-    <div id="music_player_container">
-      <div className="music_player_header background flex">
+    <div id="music_player_container" className={isLibraryOpen ? "library-open" : ""}>
+      <div className={`music_player_header background ${isLibraryOpen ? "library-open" : ""}`} >
         <img
-          className="album-art large-album"
-          src={playlistMetadata[selectedSong]?.thumbnail}
+          className={`album-art large-album square-image ${isLibraryOpen ? "shrink" : ""}`}
+          src={song?.thumbnail}
           alt="Album art"
           onClick={() => { handleIsPlaying() }}
         />
+        {isLibraryOpen &&
+          <div className="song-info">
+            <h1 className="title">
+              {song?.title || "No Title"}
+            </h1>
+            <h2 className="artist">
+              {song?.artist || "No Artist"}
+            </h2>
+          </div>
+        }
       </div>
       <audio
         src={audioBlobURL}
@@ -129,10 +142,18 @@ function MusicPlayer() {
         onEnded={() => navigatePlaylist('forward')}
         onPlay={() => loadMetadata()}
       ></audio>
-      <PlayerControls song={playlistMetadata[selectedSong]} isPlaying={isPlaying} handleIsPlaying={handleIsPlaying} audioPlayerRef={audioPlayerRef} changeSong={navigatePlaylist}/>
+      <PlayerControls song={song}
+        isPlaying={isPlaying}
+        handleIsPlaying={handleIsPlaying}
+        audioPlayerRef={audioPlayerRef}
+        changeSong={navigatePlaylist}
+        isLibraryOpen />
       <Library playlistMetadata={playlistMetadata}
         handleSongSelect={changeSong}
-        fetchNextPage={fetchNextPage} />
+        fetchNextPage={fetchNextPage}
+        isLibraryOpen={isLibraryOpen}
+        setIsLibraryOpen={setIsLibraryOpen}
+      />
     </div>
   );
 }

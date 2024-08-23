@@ -1,20 +1,28 @@
+/* Image styling */
 .album-art {
     cursor: pointer;
 }
 
-.large-album {
-    width: 60%;
-    min-width: 20rem;
-    margin: auto;
+.square-image {
+    object-fit: cover;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 25px;
+    transform-origin: top left;
+
 }
+
+.large-album {
+    padding: 1rem;
+    /* transform: translate(0, 0); */
+    transform-origin: top left;
+    /* transform-origin: center; */
+    transition: height .75s ease-in-out, margin .75s ease-in-out; /* set transition out */
+}
+
 
 .small-album-art {
     max-width: 10%;
-}
-
-.flex {
-    display: flex;
-    flex-direction: column;
 }
 
 h1 {
@@ -28,35 +36,65 @@ h1 {
     padding: 0;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto auto min-content;
+    grid-template-rows: 50% auto min-content;
     grid-template-areas:
         "thumbnail"
         "media-controls"
         "library";
+    transition: grid-template-rows .75s ease-out;
 }
 
+
 .background {
-    background-color: #0d0d0d;
+    background-color: #000000;
 }
 
 .music_player_header {
-    margin: 2rem;
     grid-area: thumbnail;
+    display: flex;
+    align-items: center;
 }
 
+.large-album.shrink {
+    height: 10vh;
+    /* position: absolute; */
+    position: relative;
+    /* top: 20px; */
+    /* left: 20px; */
+    border-radius: 15px;
+    transform: translate(0, 0);
+}
+
+.large-album:not(.shrink) {
+    margin: auto;
+}
+
+#music_player_container.library-open {
+    grid-template-rows: 15% auto min-content;
+}
+
+.music_player_header.library_open {
+    display: flex;
+    justify-content: space-between;
+}
 
 .media-controls {
     overflow: hidden;
     flex-grow: 1;
 }
 
+.song-info {
+    width: 100%;
+}
+
+
 @media (min-width: 992px) {
     #music_player_container {
         grid-template-columns: 60% 40%;
         grid-template-rows: auto 10fr .5fr;
         grid-template-areas:
-            "thumbnail search"
             "thumbnail library"
-            "media-controls-container media-controls-container"
+            "thumbnail library"
+            "media-controls library"
     }
 }

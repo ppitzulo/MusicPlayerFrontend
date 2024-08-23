@@ -1,48 +1,64 @@
 .media-controls-container {
-    background-color: #1f1f1f;
+    grid-area: media-controls;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    z-index: 1;
+
+
     width: 100%;
-    grid-area: media-controls-container;
+    position: fixed;
+
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 0;
 }
 
-#seek-slider {
+/* #seek-slider {
     width: 100%;
     position: relative;
     top: -8%;
     grid-area: seek;
+} */
 
+#seek-slider {
+    width: 80%;
 }
 
 .controls {
     display: flex;
-    justify-content: space-between;
-    width: 120px;
-    margin: auto 0;
-    padding: 1rem;
-}
-
-
-.controls button {
-    background: transparent;
-    border-color: transparent;
-}
-
-.control-buttons {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    gap: 25px;
+    gap: 4rem;
+}
+
+.controls div {
+    cursor: pointer;
+}
+
+#previous .fa-solid, #next .fa-solid {
+    color:white
+}
+
+#play-icon {
+    font-size: 3rem;
+    background-color: white;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .fa-solid {
-    font-size: 1.4rem;
+    font-size: 2rem;
+    color: #0d0d0d;
 }
 
-.title {
-    margin: auto 0px auto 0;
-    max-width: 55%;
-    text-align: center;
-}
-
+/* Progress bar styles */
 input[type="range"] {
     background: transparent;
     line-height: 160px;
@@ -95,6 +111,11 @@ input[type="range"]::-webkit-slider-thumb {
 
 .duration {
     display: none;
+}
+
+.wide {
+    width: 80%;
+    margin: 0 auto;
 }
 
 @media (min-width: 992px) {

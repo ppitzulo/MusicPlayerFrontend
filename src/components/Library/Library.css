@@ -5,8 +5,10 @@
     flex-direction: column;
     overflow: hidden;
     height: auto;
-    background-color: rgba(13, 13, 13, 1);
-    transition: background-color .4s ease-in-out;
+    background-color: rgba(0, 0, 0, 1);
+    transition: background-color .2s ease-in-out;
+    z-index: 5;
+    position: relative
 }
 
 .navbar {
@@ -15,16 +17,12 @@
     font-size: 1.2rem;
 }
 
-.navbar.closed {
-    
-}
-
 .navbar.closed .nav-item {
     border-bottom: none;
 }
 
 .library-container.open {
-    background-color: rgba(27, 27, 27, 1);
+    background-color: rgba(25, 25, 25, 1);
 }
 
 .nav-item {
@@ -55,4 +53,8 @@
 
 .playlists-container {
     height: 80vh;
+}
+
+.playlist {
+    max-height: 100%;
 }

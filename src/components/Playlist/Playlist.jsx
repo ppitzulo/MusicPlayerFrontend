@@ -29,7 +29,7 @@ function Playlist({
   };
 
   return (
-      <div className="playlist flex" onScroll={handleScroll}>
+      <div className="playlist" onScroll={handleScroll}>
         { playlistMetadata.map((song) => (
           <div className="song" key={song.id}>
             <img
