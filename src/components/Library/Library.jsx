@@ -46,10 +46,27 @@ function Library({ playlistMetadata, handleSongSelect, fetchNextPage, isLibraryO
     }
 
     const handleClickOutside = (event) => {
-        if (libraryRef.current && !libraryRef.current.contains(event.target)) {
+        if (libraryRef.current && window.innerWidth < 992 && !libraryRef.current.contains(event.target)) {
             setIsLibraryOpen(false); // Close the library when clicking outside
         }
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 992) {
+                setIsLibraryOpen(true);
+            } else {
+                setIsLibraryOpen(false);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Initial check
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, [setIsLibraryOpen]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);

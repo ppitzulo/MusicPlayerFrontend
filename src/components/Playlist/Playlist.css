@@ -22,9 +22,15 @@
 .title {
     /* text-align: center; */
     width: 80%;
+    font-size: 2.5rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.artist {
+    font-size: 1.75rem;
+    color: rgba(255, 255, 255, .3);
 }
 
 .titleContainer {

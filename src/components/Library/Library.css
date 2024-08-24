@@ -7,7 +7,6 @@
     height: auto;
     background-color: rgba(0, 0, 0, 1);
     transition: background-color .2s ease-in-out;
-    z-index: 5;
     position: relative
 }
 
@@ -22,7 +21,7 @@
 }
 
 .library-container.open {
-    background-color: rgba(25, 25, 25, 1);
+    /* background-color: rgba(25, 25, 25, 1); */
 }
 
 .nav-item {
@@ -57,4 +56,10 @@
 
 .playlist {
     max-height: 100%;
+}
+
+@media (min-width: 992px) {
+    .menu-content.open {
+        max-height: 100%;
+    }
 }

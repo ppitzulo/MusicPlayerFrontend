@@ -69,6 +69,22 @@ function MusicPlayer() {
     setPage(prevPage => prevPage + 1);
   }
 
+
+  useEffect(() => {
+    const handleResize = () => {
+        if (window.innerWidth >= 992) {
+            setIsLibraryOpen(true);
+        }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+}, [setIsLibraryOpen]);
+
   useEffect(() => {
     isPlaying ? audioPlayerRef.current.play() : audioPlayerRef.current.pause();
   }, [isPlaying]);
@@ -117,15 +133,15 @@ function MusicPlayer() {
   const song = playlistMetadata[selectedSong];
 
   return (
-    <div id="music_player_container" className={isLibraryOpen ? "library-open" : ""}>
-      <div className={`music_player_header background ${isLibraryOpen ? "library-open" : ""}`} >
+    <div id="music_player_container" className={isLibraryOpen && window.innerWidth < 992 ? "library-open" : ""}>
+      <div className={`music_player_header background ${isLibraryOpen && window.innerWidth < 992 ? "library-open" : ""}`} >
         <img
-          className={`album-art large-album square-image ${isLibraryOpen ? "shrink" : ""}`}
+          className={`album-art large-album square-image ${isLibraryOpen && window.innerWidth < 992 ? "shrink" : ""}`}
           src={song?.thumbnail}
           alt="Album art"
           onClick={() => { handleIsPlaying() }}
         />
-        {isLibraryOpen &&
+        {isLibraryOpen && window.innerWidth < 992 &&
           <div className="song-info">
             <h1 className="title">
               {song?.title || "No Title"}
