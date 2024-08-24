@@ -13,21 +13,17 @@
 .navbar {
     display: flex;
     justify-content: space-around;
-    font-size: 1.2rem;
 }
 
 .navbar.closed .nav-item {
     border-bottom: none;
 }
 
-.library-container.open {
-    /* background-color: rgba(25, 25, 25, 1); */
-}
-
 .nav-item {
     flex: 1;
     text-align: center;
     padding: .8rem;
+    font-size: 1.25rem;
     border-bottom: 1px solid #555;
 }
 
