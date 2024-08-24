@@ -20,11 +20,6 @@
     transition: height .75s ease-in-out, margin .75s ease-in-out; /* set transition out */
 }
 
-
-.small-album-art {
-    max-width: 10%;
-}
-
 h1 {
     font-size: 1.4rem;
 }

@@ -33,14 +33,14 @@ function Playlist({
         { playlistMetadata.map((song) => (
           <div className="song" key={song.id}>
             <img
-              className="album-art small-album-art"
+              className="thumbnail square-image"
               src={song.thumbnail}
               alt="thumbnail"
               onClick={() => handleSongSelect(song.id)}
             />
             <div className="titleContainer">
               <a
-                className="medium-font"
+                className="title medium-font"
                 onClick={() => handleSongSelect(song.id)}
               >
                 {song.title}

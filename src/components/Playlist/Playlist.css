@@ -38,8 +38,12 @@
     white-space: nowrap;
 }
 
-.medium-font {
-    font-size: 1.35rem;
+.title.medium-font {
+    font-size: 1.75rem;
+}
+
+.artist.medium-font {
+    font-size: 1.25rem;
 }
 
 .opaque {
@@ -47,7 +51,6 @@
 }
 
 .playlist {
-    margin: 0px 10px 0px 10px;
     gap: 20px;
     overflow-y: auto;
     justify-content: flex-start;
@@ -84,6 +87,13 @@ input[type="file"] {
 
 .upload button:active {
     background-color: #5b5cb9;
+}
+
+.thumbnail {
+    max-width: 6rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 1rem;
 }
 
 @media (min-width: 992px) {
