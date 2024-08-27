@@ -65,28 +65,8 @@
     font-size: 1.3rem;
 }
 
-.upload {
-    flex: 1;
-    cursor: pointer;
-}
-
 input[type="file"] {
     display: none;
-}
-
-.upload button {
-    border: transparent;
-    border-radius: 50px;
-    width: 150px;
-    background-color: #44459f;
-    cursor: pointer;
-    margin-top: 2rem;
-    padding: .5rem;
-    font-size: 1.5rem;
-}
-
-.upload button:active {
-    background-color: #5b5cb9;
 }
 
 .thumbnail {

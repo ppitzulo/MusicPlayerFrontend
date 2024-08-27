@@ -1,12 +1,13 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Upload.css";
-import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Upload = () => {
     const [CSRFToken, setCSRFToken] = useState("");
     const [uploading, setUploading] = useState(false);
-    const backendURL = import.meta.env.VITE_BACKEND_URL
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         fetch(backendURL + "/api/csrf-token")
@@ -38,16 +39,39 @@ const Upload = () => {
             })
             .catch((error) => {
                 setUploading(false);
-                console.error("Upload erorr:", error);
+                console.error("Upload error:", error);
             });
     };
 
+    const triggerFileInput = () => {
+        fileInputRef.current.click();
+    };
 
     return (
         <>
-            <input type="file" id="file-upload" multiple onChange={handleFileUpload} />
-            {!uploading && <label htmlFor="file-upload" className="custom-file-upload header-text"> <FontAwesomeIcon className="uploadIcon" icon={faArrowUpFromBracket} /> </label>}
-            {uploading && <div className="spinner-container"><span className="spinner"></span></div>}
+            <input
+                type="file"
+                id="file-upload"
+                multiple
+                onChange={handleFileUpload}
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+            />
+            <div className="upload-container">
+                <div className="upload">
+                    {!uploading && (
+                        <button type="button" onClick={triggerFileInput}>
+                            <FontAwesomeIcon className="uploadIcon" icon={faCloudUploadAlt} />
+                            Upload Files
+                        </button>
+                    )}
+                    {uploading && (
+                        <div className="spinner-container">
+                            <span className="spinner"></span>
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     );
 };

@@ -9,7 +9,42 @@
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
-    
+
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.upload {
+    text-align: center;
+}
+
+.upload button {
+    border: none;
+    border-radius: 50px;
+    width: 150px;
+    background-color: #44459f;
+    cursor: pointer;
+    margin-top: 2rem;
+    padding: .7rem 1.5rem;
+    font-size: 1.2rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.upload button:active {
+    background-color: #5b5cb9;
+}
+
+.upload button:hover {
+    background-color: #3c3d8a;
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
@@ -20,13 +55,12 @@
 } 
 
 .uploadIcon {
-    font-size: 2rem;
-    cursor: pointer;
-    margin-left: 1rem;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
 }
 
-@media (min-width: 992px) {
-    .uploadIcon {
-        margin: 0rem;
-    }
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
