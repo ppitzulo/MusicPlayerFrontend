@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import "./PlayerControls.css"
 import Upload from '../Upload/Upload';
+
+const formatTime = (timeInSeconds) => {
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  const formattedMinutes = minutes >= 10 ? minutes : `${minutes}`;
+  const formattedSeconds = String(seconds).padStart(2, '0');
+  return `${formattedMinutes}:${formattedSeconds}`;
+};
+
 const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong, isLibraryOpen }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setCurrentDuration] = useState(19);
@@ -25,20 +34,13 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
   }, []);
 
   return (
-    // <span className="duration">
-    //   {song?.runtime}
-    // </span>
     <div className="media-controls-container">
       <div className="song-title wide">
         <h1 className="title">
-          {song?.title
-            ? song?.title
-            : "No Title"}
+          {song?.title ? song?.title : "No Title"}
         </h1>
         <h2 className="artist">
-          {song?.artist
-            ? song?.artist
-            : "No Artist"}
+          {song?.artist ? song?.artist : "No Artist"}
         </h2>
       </div>
       <div className="controls">
@@ -56,15 +58,19 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
           <i className="fa-solid fa-forward"></i>
         </div>
       </div>
-            <input
-              type="range"
-              id="seek-slider"
-              min="0"
-              step="0.01"
-              max={duration}
-              value={currentTime}
-              onChange={(event) => handleSeek(event)}
-            />
+      <input
+        type="range"
+        id="seek-slider"
+        min="0"
+        step="0.01"
+        max={duration}
+        value={currentTime}
+        onChange={(event) => handleSeek(event)}
+      />
+      <div className="time-container">
+        <span className="current-time">{formatTime(currentTime)}</span>
+        <span className="duration">{song?.runtime}</span>
+      </div>
     </div>
   )
 }
