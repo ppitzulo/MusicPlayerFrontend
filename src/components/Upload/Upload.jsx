@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Upload.css";
 import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +15,7 @@ const Upload = () => {
             .then((data) => {
                 setCSRFToken(data);
             });
-    }, []);
+    }, [backendURL]);
 
     const handleFileUpload = (event) => {
         setUploading(true);

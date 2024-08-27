@@ -1,5 +1,10 @@
-import { React, useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
 import "./Search.css";
+
+Search.propTypes = {
+    setSearchResults: PropTypes.func.isRequired,
+}
 
 const Search = ({ setSearchResults }) => {
     const [query, setQuery] = useState("");
@@ -7,23 +12,23 @@ const Search = ({ setSearchResults }) => {
 
     useEffect(() => {
         if (query == '') {
-            setSearchResults([]);            
+            setSearchResults([]);
         }
         else {
             fetch(backendURL + "/api/search/?search=" + query)
-            .then((response) => {
-              if (response == '') {
-                  return [];
-              }
-              else {
-                  return response.json();
-              }
-            })
-            .then((data) => {
-              setSearchResults(data);
-            });
+                .then((response) => {
+                    if (response == '') {
+                        return [];
+                    }
+                    else {
+                        return response.json();
+                    }
+                })
+                .then((data) => {
+                    setSearchResults(data);
+                });
         }
-    }, [query]);
+    }, [query, backendURL, setSearchResults]);
 
     const handleInputChange = (event) => {
         setQuery(event.target.value);
@@ -31,9 +36,9 @@ const Search = ({ setSearchResults }) => {
 
     return (
         <input type="text"
-                value={query}
-                onChange={handleInputChange}
-                placeholder="Search"/>
+            value={query}
+            onChange={handleInputChange}
+            placeholder="Search" />
     )
 }
 

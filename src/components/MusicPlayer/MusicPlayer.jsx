@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import "./MusicPlayer.css";
-import Playlist from "../Playlist/Playlist";
 import Library from "../Library/Library";
 import PlayerControls from "../PlayerControls/PlayerControls";
 
@@ -8,7 +7,6 @@ function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedSong, setSelectedSong] = useState(0);
   const [playlistMetadata, setPlaylistMetadata] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [audioBlobURL, setAudioBlobURL] = useState("");
   const [isLibraryOpen, setIsLibraryOpen] = useState(false);
@@ -35,7 +33,6 @@ function MusicPlayer() {
       .then((data) => {
         if (data.length === 0) { endOfData.current = true; }
         setPlaylistMetadata(prevPlaylistMetadata => [...prevPlaylistMetadata, ...data]);
-        setIsLoading(false);
       }).catch(err => {
         if (err.name === "AbortError") {
           console.log("Canceled duplicate request.");
@@ -48,8 +45,7 @@ function MusicPlayer() {
     return () => {
       controller.abort();
     };
-  }, [page]);
-
+  }, [page, backendURL]);
 
   const changeSong = (songID) => {
     for (let song = 0; song < playlistMetadata.length; song++) {
@@ -72,41 +68,40 @@ function MusicPlayer() {
 
   useEffect(() => {
     const handleResize = () => {
-        if (window.innerWidth >= 992) {
-            setIsLibraryOpen(true);
-        }
+      if (window.innerWidth >= 992) {
+        setIsLibraryOpen(true);
+      }
     };
 
     window.addEventListener("resize", handleResize);
     handleResize(); // Initial check
 
     return () => {
-        window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
-}, [setIsLibraryOpen]);
+  }, [setIsLibraryOpen]);
 
   useEffect(() => {
     isPlaying ? audioPlayerRef.current.play() : audioPlayerRef.current.pause();
   }, [isPlaying]);
 
-  useEffect(() => {
-    // Deallocate old audio blob if exists
-    if (audioBlobURL !== "") {
-      URL.revokeObjectURL(audioBlobURL)
-    }
-
-    if (playlistMetadata.length > 0) {
+  const fetchAudioBlob = useCallback(() => {
+    if (playlistMetadata.length > 0 && selectedSong !== null) {
       fetch(backendURL + `/api/audio/${playlistMetadata[selectedSong]?.id}/`)
         .then((response) => response.blob())
         .then((audioBlob) => {
-          /* make sure to deallocate this */
+          // make sure to deallocate this
           setAudioBlobURL(URL.createObjectURL(audioBlob));
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  }, [isLoading, selectedSong]);
+  }, [backendURL, playlistMetadata, selectedSong]);
+
+  useEffect(() => {
+    fetchAudioBlob();
+  }, [fetchAudioBlob]);
 
   const handleIsPlaying = () => {
     setIsPlaying(!isPlaying);
@@ -128,7 +123,7 @@ function MusicPlayer() {
         setIsPlaying(true);
       }
     });
-  }, [selectedSong]);
+  }, [selectedSong, playlistMetadata.length]);
 
   const song = playlistMetadata[selectedSong];
 
@@ -162,8 +157,8 @@ function MusicPlayer() {
         isPlaying={isPlaying}
         handleIsPlaying={handleIsPlaying}
         audioPlayerRef={audioPlayerRef}
-        changeSong={navigatePlaylist}
-        isLibraryOpen />
+        changeSong={navigatePlaylist} 
+      />
       <Library playlistMetadata={playlistMetadata}
         handleSongSelect={changeSong}
         fetchNextPage={fetchNextPage}

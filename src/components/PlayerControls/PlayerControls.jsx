@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
 import "./PlayerControls.css"
-import Upload from '../Upload/Upload';
+
+
 
 const formatTime = (timeInSeconds) => {
   const minutes = Math.floor(timeInSeconds / 60);
@@ -10,10 +12,24 @@ const formatTime = (timeInSeconds) => {
   return `${formattedMinutes}:${formattedSeconds}`;
 };
 
-const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong, isLibraryOpen }) => {
+const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, changeSong }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setCurrentDuration] = useState(19);
 
+  PlayerControls.propTypes = {
+    song: PropTypes.shape({
+      title: PropTypes.string,
+      artist: PropTypes.string,
+      runtime: PropTypes.string,
+    }).isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    handleIsPlaying: PropTypes.func.isRequired,
+    audioPlayerRef: PropTypes.shape({
+      current: PropTypes.instanceOf(Element),
+    }).isRequired,
+    changeSong: PropTypes.func.isRequired,
+  };
+  
   const handleSeek = (e) => {
     const seekTime = parseFloat(e.target.value);
     audioPlayerRef.current.currentTime = seekTime;
@@ -31,7 +47,7 @@ const PlayerControls = ({ song, isPlaying, handleIsPlaying, audioPlayerRef, chan
     audioPlayerRef.current.addEventListener("timeupdate", () => {
       setCurrentTime(audioPlayerRef.current.currentTime);
     });
-  }, []);
+  }, [audioPlayerRef]);
 
   return (
     <div className="media-controls-container">

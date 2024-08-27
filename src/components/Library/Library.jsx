@@ -1,7 +1,16 @@
-import { React, useState, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
+import { useState, useEffect, useRef } from 'react'
 import Playlist from '../Playlist/Playlist'
 import "./Library.css"
 import Upload from '../Upload/Upload'
+
+Library.propTypes = {
+    playlistMetadata: PropTypes.array.isRequired,
+    handleSongSelect: PropTypes.func.isRequired,
+    fetchNextPage: PropTypes.func.isRequired,
+    isLibraryOpen: PropTypes.bool.isRequired,
+    setIsLibraryOpen: PropTypes.func.isRequired,
+};
 
 function navbar(isLibraryOpen, openMenu, handleMenuClick) {
     if (isLibraryOpen) {
@@ -33,12 +42,6 @@ function Library({ playlistMetadata, handleSongSelect, fetchNextPage, isLibraryO
         setIsLibraryOpen(true);
     }
 
-    const handleClickOutside = (event) => {
-        if (libraryRef.current && window.innerWidth < 992 && !libraryRef.current.contains(event.target)) {
-            setIsLibraryOpen(false); // Close the library when clicking outside
-        }
-    };
-
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 992) {
@@ -57,11 +60,17 @@ function Library({ playlistMetadata, handleSongSelect, fetchNextPage, isLibraryO
     }, [setIsLibraryOpen]);
 
     useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (libraryRef.current && window.innerWidth < 992 && !libraryRef.current.contains(event.target)) {
+                setIsLibraryOpen(false); // Close the library when clicking outside
+            }
+        };
+        
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, [setIsLibraryOpen]);
 
     const renderMenu = () => {
         if (openMenu === "Now Playing") {

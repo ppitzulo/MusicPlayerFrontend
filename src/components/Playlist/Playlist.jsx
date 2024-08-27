@@ -1,7 +1,19 @@
-import React, {useState } from "react";
+import PropTypes from "prop-types";
 import "./Playlist.css";
-// import Search from "../Search/Search";
-// import Upload from "../Upload/Upload";
+
+Playlist.propTypes = {
+  playlistMetadata: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      thumbnail: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      artist: PropTypes.string.isRequired,
+      runtime: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  handleSongSelect: PropTypes.func.isRequired,
+  fetchNextPage: PropTypes.func.isRequired,
+};
 
 function Playlist({
   playlistMetadata,
@@ -9,49 +21,41 @@ function Playlist({
   fetchNextPage,
 }) {
 
-  const [searchResults, setSearchResults] = useState([])
-
-  const handleSearch = () => {
-    // if (searchResults.length > 0) { return searchResults; }
-    return playlistMetadata;
-  }
-
   const handleScroll = () => {
     const playlistDiv = document.querySelector(".playlist");
 
     let scrollDistance = Math.round(
       playlistDiv.scrollTop + playlistDiv.offsetHeight
     );
-    
+
     if (scrollDistance === playlistDiv.scrollHeight) {
       fetchNextPage();
     }
   };
 
   return (
-      <div className="playlist" onScroll={handleScroll}>
-        { playlistMetadata.map((song) => (
-          <div className="song" key={song.id}>
-            <img
-              className="thumbnail square-image"
-              src={song.thumbnail}
-              alt="thumbnail"
+    <div className="playlist" onScroll={handleScroll}>
+      {playlistMetadata.map((song) => (
+        <div className="song" key={song.id}>
+          <img
+            className="thumbnail square-image"
+            src={song.thumbnail}
+            alt="thumbnail"
+            onClick={() => handleSongSelect(song.id)}
+          />
+          <div className="titleContainer">
+            <a
+              className="title medium-font"
               onClick={() => handleSongSelect(song.id)}
-            />
-            <div className="titleContainer">
-              <a
-                className="title medium-font"
-                onClick={() => handleSongSelect(song.id)}
-              >
-                {song.title}
-              </a>
-              <p className="artist medium-font opaque">{song.artist}</p>
-            </div>
-            <p className="runtime">{song.runtime}</p>
-            {/* <span className="duration">{formatTime(currentTime)} / {formatTime(duration)}</span> implement this later for desktop*/}
+            >
+              {song.title}
+            </a>
+            <p className="artist medium-font opaque">{song.artist}</p>
           </div>
-        ))}
-      </div>
+          <p className="runtime">{song.runtime}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
