@@ -1,21 +1,29 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import "./Upload.css";
 import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+function getCSRFToken() {
+  let csrfToken = null;
+  const cookies = document.cookie.split(';');
+
+  for (let cookie of cookies) {
+    cookie = cookie.trim();
+    if (cookie.startsWith("csrftoken=")) {
+      csrfToken = cookie.substring('csrftoken='.length);
+      break;
+    }
+  }
+
+  return csrfToken;
+}
+
+const CSRFToken = getCSRFToken();
+
 const Upload = () => {
-    const [CSRFToken, setCSRFToken] = useState("");
     const [uploading, setUploading] = useState(false);
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const fileInputRef = useRef(null);
-
-    useEffect(() => {
-        fetch(backendURL + "/api/csrf-token")
-            .then((response) => response.json())
-            .then((data) => {
-                setCSRFToken(data);
-            });
-    }, [backendURL]);
 
     const handleFileUpload = (event) => {
         setUploading(true);
