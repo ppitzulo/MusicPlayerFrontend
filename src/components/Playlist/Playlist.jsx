@@ -4,7 +4,7 @@ import "./Playlist.css";
 Playlist.propTypes = {
   playlistMetadata: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       thumbnail: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       artist: PropTypes.string.isRequired,

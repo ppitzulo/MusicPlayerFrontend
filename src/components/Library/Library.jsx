@@ -5,11 +5,20 @@ import "./Library.css"
 import Upload from '../Upload/Upload'
 
 Library.propTypes = {
-    playlistMetadata: PropTypes.array.isRequired,
-    handleSongSelect: PropTypes.func.isRequired,
+    playlistMetadata: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            url: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            runtime: PropTypes.string.isRequired,
+            thumbnail: PropTypes.string.isRequired,
+            artist: PropTypes.string.isRequired,
+        })
+    ).isRequired,    handleSongSelect: PropTypes.func.isRequired,
     fetchNextPage: PropTypes.func.isRequired,
     isLibraryOpen: PropTypes.bool.isRequired,
     setIsLibraryOpen: PropTypes.func.isRequired,
+    
 };
 
 function navbar(isLibraryOpen, openMenu, handleMenuClick) {

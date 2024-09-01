@@ -120,7 +120,6 @@ function MusicPlayer() {
     audioPlayerRef.current.addEventListener("loadedmetadata", () => {
       if (playlistMetadata.length > 0) {
         audioPlayerRef.current.play();
-        setIsPlaying(true);
       }
     });
   }, [selectedSong, playlistMetadata.length]);
