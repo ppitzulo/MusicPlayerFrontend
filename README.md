@@ -1,6 +1,6 @@
 # Music Player Frontend
 
-This is a basic frontend for the corresponding music player backend. It is complete with basic media controls, support for uploading music files and autoplay with potentially more to come in the future.
+This is the frontend for my music player written in React, it is complete with basic media controls, support for uploading music files and autoplay with potentially more to come in the future. The live demo currently doesn't support uploading audio files for obvious reasons, however it gives a good idea of what the project is capable of doing and can be checked out [here](https://ppitzulo.github.io/MusicPlayerFrontend/).
 
 ## Features
 
