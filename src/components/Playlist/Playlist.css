@@ -1,6 +1,6 @@
 .song {
     display: flex;
-    gap:15px;
+    gap: 15px;
     align-items: center;
     position: relative;
 }
@@ -34,7 +34,7 @@
 
 .titleContainer {
     overflow: hidden;
-    text-overflow: ellipsis;        
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
@@ -57,6 +57,9 @@
     padding: 10px 0;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    padding-bottom: 20px;
+    max-height: 74svh;
 }
 
 .runtime {
@@ -77,12 +80,16 @@ input[type="file"] {
 }
 
 @media (min-width: 992px) {
- 
+
     .title {
         font-size: 2.5rem;
     }
 
     .artist {
         font-size: 1.75rem;
+    }
+
+    .playlist {
+        max-height: 93svh;
     }
 }

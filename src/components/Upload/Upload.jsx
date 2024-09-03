@@ -1,29 +1,42 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Upload.css";
 import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function getCSRFToken() {
-  let csrfToken = null;
-  const cookies = document.cookie.split(';');
 
-  for (let cookie of cookies) {
-    cookie = cookie.trim();
-    if (cookie.startsWith("csrftoken=")) {
-      csrfToken = cookie.substring('csrftoken='.length);
-      break;
+// Helper function to get CSRF token from cookies
+const getCookie = (name) => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
-  }
-
-  return csrfToken;
-}
-
-const CSRFToken = getCSRFToken();
+    return cookieValue;
+};
 
 const Upload = () => {
+    const [CSRFToken, setCSRFToken] = useState("");
     const [uploading, setUploading] = useState(false);
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+        fetch(backendURL + "/api/csrf-token", {
+            credentials: "include",
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("CSRF token:", data);
+                setCSRFToken(data.csrfToken);
+            });
+    }, [backendURL]);
 
     const handleFileUpload = (event) => {
         setUploading(true);
@@ -33,8 +46,9 @@ const Upload = () => {
         for (let i = 0; i < files.length; i++) {
             formData.append("files", files[i]);
         }
-
+        console.log("csrf token:", CSRFToken);
         fetch(backendURL + "/api/upload/", {
+            credentials: "include",
             method: "POST",
             headers: {
                 "X-CSRFToken": CSRFToken,

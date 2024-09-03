@@ -2,10 +2,6 @@ import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import "./Search.css";
 
-Search.propTypes = {
-    setSearchResults: PropTypes.func.isRequired,
-}
-
 const Search = ({ setSearchResults }) => {
     const [query, setQuery] = useState("");
     const backendURL = import.meta.env.VITE_BACKEND_URL
@@ -40,6 +36,10 @@ const Search = ({ setSearchResults }) => {
             onChange={handleInputChange}
             placeholder="Search" />
     )
+}
+
+Search.propTypes = {
+    setSearchResults: PropTypes.func.isRequired,
 }
 
 export default Search
